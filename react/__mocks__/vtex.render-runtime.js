@@ -12,3 +12,8 @@ export const Link = ({ children }) => <a>{children}</a>
 export const NoSSR = ({ children }) => (
   <div className="NoSSR-mock">{children}</div>
 )
+
+export const useRuntime = () => {
+  const account = 'account'
+  return { account }
+}
