@@ -19,22 +19,24 @@ const wrapWithLink = (href, element) =>
 const Logo = ({ href, isMobile, url, width, height, title }) => {
   const { account } = useRuntime()
 
-  const getUrl = url => url.replace(/{{account}}/g, account)
-
-  const getLogoImage = () =>
-    url ? (
-      <img src={getUrl(url)} width={width} height={height} alt={title} />
-    ) : (
-      <Placeholder width={width} height={height} title={title} />
-    )
-
   const logoClassNames = classNames('store-logo', styles.logoContainer, {
     [styles.sizeDesktop]: !isMobile,
     [styles.sizeMobile]: isMobile,
   })
 
   const logo = (
-    <span className={`${logoClassNames} pv4 ph6`}>{getLogoImage()}</span>
+    <span className={`${logoClassNames} pv4 ph6`}>
+      {url ? (
+        <img
+          src={url.replace(/{{account}}/g, account)}
+          width={width}
+          height={height}
+          alt={title}
+        />
+      ) : (
+        <Placeholder width={width} height={height} title={title} />
+      )}
+    </span>
   )
 
   return wrapWithLink(href, logo)
