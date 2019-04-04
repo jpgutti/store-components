@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove unused `VtexLogo` along with the props `color` and `showLabel` in `Logo`.
 - Replaced `withRuntime` HOC by `useRuntime` hook in `Logo`.
 
+## [3.22.0] - 2019-04-04
+
+### Added
+
+- Place thumbs according to position on `ProductImages`.
+
 ## [3.21.8] - 2019-04-03
 
 ### Fixed
