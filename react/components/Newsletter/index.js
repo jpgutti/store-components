@@ -1,12 +1,27 @@
 import React, { Component, Fragment } from 'react'
-import { compose, graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
+import { compose } from 'ramda'
 import PropTypes from 'prop-types'
-import { injectIntl, intlShape } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import { Input, Button } from 'vtex.styleguide'
+import { withCssHandles } from 'vtex.css-handles'
+import { formatIOMessage } from 'vtex.native-types'
+
 import SUBSCRIBE_NEWSLETTER from './mutations/subscribeNewsletter.graphql'
-import style from './style.css'
 
 const EMAIL_REGEX = /^[A-z0-9+_-]+(?:\.[A-z0-9+_-]+)*@(?:[A-z0-9](?:[A-z0-9-]*[A-z0-9])?\.)+[A-z0-9](?:[A-z0-9-]*[A-z0-9])?$/
+const CSS_HANDLES = [
+  'newsletter',
+  'confirmation',
+  'container',
+  'confirmationTitle',
+  'confirmationText',
+  'form',
+  'inputGroup',
+  'buttonContainer',
+  'label',
+  'error',
+]
 
 class Newsletter extends Component {
   state = {
@@ -34,7 +49,7 @@ class Newsletter extends Component {
   }
 
   handleChangeEmail = e => {
-    this.setState({ email: e.target.value })
+    this.setState({ email: e.target.value.trim() })
   }
 
   validateEmail = () => {
@@ -48,6 +63,7 @@ class Newsletter extends Component {
       if (this.inputRef && this.inputRef.current) {
         this.inputRef.current.focus()
       }
+
       return
     }
 
@@ -63,71 +79,79 @@ class Newsletter extends Component {
       .then(() => {
         this.safeSetState({ success: true, loading: false })
       })
-      .catch(e => {
+      .catch(() => {
         this.safeSetState({ error: true, loading: false })
       })
   }
 
   render() {
-    const {
-      placeholder = this.props.intl.formatMessage({
-        id: 'newsletter.placeholder',
-      }),
-      submit = this.props.intl.formatMessage({ id: 'newsletter.submit' }),
-      label = this.props.intl.formatMessage({ id: 'newsletter.label' }),
-      hideLabel,
-    } = this.props
+    const { hideLabel, intl, submit, label, placeholder, handles } = this.props
+
+    const submitText = formatIOMessage({ id: submit, intl })
+    const labelText = formatIOMessage({ id: label, intl })
+    const placeholderText = formatIOMessage({ id: placeholder, intl })
+    const confirmationTitle = formatIOMessage({
+      id: 'store/newsletter.confirmationTitle',
+      intl,
+    })
+
+    const confirmationText = formatIOMessage({
+      id: 'store/newsletter.confirmationText',
+      intl,
+    })
+
+    const invalidEmailText = formatIOMessage({
+      id: 'store/newsletter.invalidEmail',
+      intl,
+    })
+
+    const errorMsg = formatIOMessage({
+      id: 'store/newsletter.error',
+      intl,
+    })
 
     return (
       <div
-        className={`${style.newsletter} ${
-          this.state.success ? style.confirmation : ''
+        className={`${handles.newsletter} ${
+          this.state.success ? handles.confirmation : ''
         } w-100`}
       >
-        <div className={`${style.container} mw9 mr-auto ml-auto pv9`}>
+        <div className={`${handles.container} mw9 mr-auto ml-auto pv9`}>
           {this.state.success ? (
             <Fragment>
-              <div className={`${style.confirmationTitle} t-heading-3 pb4 tc`}>
-                {this.props.intl.formatMessage({
-                  id: 'newsletter.confirmationTitle',
-                })}
+              <div
+                className={`${handles.confirmationTitle} t-heading-3 pb4 tc`}
+              >
+                {confirmationTitle}
               </div>
-              <div className={`${style.confirmationText} t-body tc`}>
-                {this.props.intl.formatMessage({
-                  id: 'newsletter.confirmationText',
-                })}
+              <div className={`${handles.confirmationText} t-body tc`}>
+                {confirmationText}
               </div>
             </Fragment>
           ) : (
-            <form className={`${style.form} mw6 center tc ph5 ph0-ns`}>
+            <form className={`${handles.form} mw6 center tc ph5 ph0-ns`}>
               <label
-                className={`${style.label} t-heading-3 tc ${
+                className={`${handles.label} t-heading-3 tc ${
                   hideLabel ? 'dn' : ''
                 }`}
                 htmlFor="newsletter-input"
               >
-                {label}
+                {labelText}
               </label>
-              <div className={`${style.inputGroup} flex-ns pt5`}>
+              <div className={`${handles.inputGroup} flex-ns pt5`}>
                 <Input
                   ref={this.inputRef}
                   id="newsletter-input"
                   errorMessage={
-                    this.state.invalidEmail
-                      ? this.props.intl.formatMessage({
-                          id: 'newsletter.invalidEmail',
-                        })
-                      : null
+                    this.state.invalidEmail ? invalidEmailText : null
                   }
-                  placeholder={placeholder}
+                  placeholder={placeholderText}
                   name="newsletter"
                   value={this.state.email}
                   onChange={this.handleChangeEmail}
                 />
                 <div
-                  className={`${
-                    style.buttonContainer
-                  } pl4-ns flex-none pt3 pt0-ns`}
+                  className={`${handles.buttonContainer} pl4-ns flex-none pt3 pt0-ns`}
                 >
                   <Button
                     variation="primary"
@@ -135,13 +159,13 @@ class Newsletter extends Component {
                     onClick={this.handleSubmit}
                     isLoading={this.state.loading}
                   >
-                    {submit}
+                    {submitText}
                   </Button>
                 </div>
               </div>
               {this.state.error && (
-                <div className={`${style.error} c-danger t-body pt5`}>
-                  {this.props.intl.formatMessage({ id: 'newsletter.error' })}
+                <div className={`${handles.error} c-danger t-body pt5`}>
+                  {errorMsg}
                 </div>
               )}
             </form>
@@ -151,6 +175,12 @@ class Newsletter extends Component {
     )
   }
 }
+
+const NewsletterWrapper = compose(
+  graphql(SUBSCRIBE_NEWSLETTER, { name: 'subscribeNewsletter' }),
+  withCssHandles(CSS_HANDLES),
+  injectIntl
+)(Newsletter)
 
 Newsletter.defaultProps = {
   hideLabel: false,
@@ -164,41 +194,24 @@ Newsletter.propTypes = {
   placeholder: PropTypes.string,
   submit: PropTypes.string,
   subscribeNewsletter: PropTypes.func.isRequired,
-  intl: intlShape,
+  intl: PropTypes.object,
+  handles: PropTypes.any,
 }
 
-Newsletter.getSchema = () => {
+NewsletterWrapper.getSchema = () => {
   return {
-    title: 'editor.newsletter.title',
-    description: 'editor.newsletter.description',
+    title: 'admin/editor.newsletter.title',
+    description: 'admin/editor.newsletter.description',
     type: 'object',
     properties: {
       hideLabel: {
         type: 'boolean',
-        title: 'editor.newsletter.hideLabel',
+        title: 'admin/editor.newsletter.hideLabel',
         default: false,
         isLayout: true,
-      },
-      label: {
-        type: 'string',
-        title: 'editor.newsletter.label',
-        isLayout: false,
-      },
-      placeholder: {
-        type: 'string',
-        title: 'editor.newsletter.placeholder',
-        isLayout: false,
-      },
-      submit: {
-        type: 'string',
-        title: 'editor.newsletter.submit',
-        isLayout: false,
       },
     },
   }
 }
 
-export default compose(
-  graphql(SUBSCRIBE_NEWSLETTER, { name: 'subscribeNewsletter' }),
-  injectIntl
-)(Newsletter)
+export default NewsletterWrapper

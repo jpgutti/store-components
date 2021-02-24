@@ -1,3 +1,8 @@
+export const textModeValues = {
+  HTML: 'html',
+  RICHTEXT: 'rich-text',
+}
+
 export const textPostionValues = {
   LEFT: 'left',
   CENTER: 'center',
@@ -16,47 +21,58 @@ export const callActionValues = {
   LINK: 'link',
 }
 
+export const textModeTypes = {
+  TEXT_MODE_HTML: {
+    name: 'admin/editor.info-card.textMode.html',
+    value: textModeValues.HTML,
+  },
+  TEXT_MODE_RICHTEXT: {
+    name: 'admin/editor.info-card.textMode.rich-text',
+    value: textModeValues.RICHTEXT,
+  },
+}
+
 export const textPositionTypes = {
   TEXT_POSITION_LEFT: {
-    name: 'editor.info-card.textPosition.left',
+    name: 'admin/editor.info-card.textPosition.left',
     value: textPostionValues.LEFT,
   },
   TEXT_POSITION_CENTER: {
-    name: 'editor.info-card.textPosition.center',
+    name: 'admin/editor.info-card.textPosition.center',
     value: textPostionValues.CENTER,
   },
   TEXT_POSITION_RIGHT: {
-    name: 'editor.info-card.textPosition.right',
+    name: 'admin/editor.info-card.textPosition.right',
     value: textPostionValues.RIGHT,
   },
 }
 
 export const textAlignmentTypes = {
   TEXT_ALIGNMENT_LEFT: {
-    name: 'editor.info-card.textAlignment.left',
+    name: 'admin/editor.info-card.textAlignment.left',
     value: textAlignmentValues.LEFT,
   },
   TEXT_ALIGNMENT_CENTER: {
-    name: 'editor.info-card.textAlignment.center',
+    name: 'admin/editor.info-card.textAlignment.center',
     value: textAlignmentValues.CENTER,
   },
   TEXT_ALIGNMENT_RIGHT: {
-    name: 'editor.info-card.textAlignment.right',
+    name: 'admin/editor.info-card.textAlignment.right',
     value: textAlignmentValues.RIGHT,
   },
 }
 
 export const callToActionModeTypes = {
   CALL_ACTION_NONE: {
-    name: 'editor.info-card.callAction.none',
+    name: 'admin/editor.info-card.callAction.none',
     value: callActionValues.NONE,
   },
   CALL_ACTION_BUTTON: {
-    name: 'editor.info-card.callAction.button',
+    name: 'admin/editor.info-card.callAction.button',
     value: callActionValues.BUTTON,
   },
   CALL_ACTION_LINK: {
-    name: 'editor.info-card.callAction.link',
+    name: 'admin/editor.info-card.callAction.link',
     value: callActionValues.LINK,
   },
 }

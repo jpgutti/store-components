@@ -1,255 +1,324 @@
-import React, { Component } from 'react'
+import React from 'react'
 import classNames from 'classnames'
-import PropTypes from 'prop-types'
-import { isNil } from 'ramda'
-import ContentLoader from 'react-content-loader'
+import { isNil, head, last, sort, equals } from 'ramda'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import { IOMessage } from 'vtex.native-types'
+import { useRuntime } from 'vtex.render-runtime'
+import { formatCurrency } from 'vtex.format-currency'
+import { useCssHandles } from 'vtex.css-handles'
 
+import ProductPriceLoader from './Loader'
 import PricePropTypes from './propTypes'
 import Installments from './Installments'
-
+import Price from './Price'
 import productPrice from './styles.css'
+
+const CSS_HANDLES = [
+  'price_className',
+  'price_loader',
+  'price_listPriceContainer',
+  'price_listPriceLabel',
+  'price_listPrice',
+  'price_listPriceRange',
+  'price_sellingPriceRange',
+  'price_sellingPriceContainer',
+  'price_sellingPriceLabel',
+  'price_sellingPrice',
+  'price_savingsContainer',
+  'price_savings',
+  'price_savings_value',
+  'price_installment',
+  'price_interestRate',
+  'price_installmentContainer',
+]
+
+const isValidPriceRange = priceRange => {
+  const [lowPrice, highPrice] = priceRange
+
+  return priceRange.length === 2 && lowPrice !== highPrice
+}
+
+const getPriceRange = prices => {
+  const sortedPrices = sort((a, b) => a - b, prices)
+
+  return [head(sortedPrices), last(sortedPrices)]
+}
+
+const canShowListPrice = props => {
+  const {
+    sellingPriceList,
+    sellingPrice,
+    listPrice,
+    listPriceList,
+    showListPrice,
+    showListPriceRange,
+    showSellingPriceRange,
+  } = props
+
+  if (!showListPrice) {
+    return false
+  }
+
+  const sellingPriceRange =
+    (sellingPriceList && getPriceRange(sellingPriceList)) || []
+
+  const listPriceRange = (listPriceList && getPriceRange(listPriceList)) || []
+
+  const showingSellingPriceRange =
+    showSellingPriceRange && isValidPriceRange(sellingPriceRange)
+
+  const showingListPriceRange =
+    showListPriceRange && isValidPriceRange(listPriceRange)
+
+  const sellingPriceToShow = showingSellingPriceRange
+    ? sellingPriceRange
+    : sellingPrice
+
+  const listPriceToShow = showingListPriceRange ? listPriceRange : listPrice
+
+  return !equals(listPriceToShow, sellingPriceToShow)
+}
+
 /**
  * The Price component. Shows the prices information of the Product Summary.
  */
-class Price extends Component {
-  static contextTypes = {
-    culture: PropTypes.object,
-  }
+const ProductPrice = props => {
+  const {
+    sellingPriceList,
+    sellingPrice,
+    listPrice,
+    listPriceList,
+    showListPrice,
+    showSellingPriceRange,
+    showListPriceRange,
+    showInstallments,
+    showLabels,
+    showSavings,
+    labelSellingPrice,
+    labelListPrice,
+    className,
+    loaderClass,
+    listPriceContainerClass,
+    listPriceLabelClass,
+    listPriceClass,
+    listPriceRangeClass,
+    sellingPriceRangeClass,
+    sellingPriceContainerClass,
+    sellingPriceLabelClass,
+    sellingPriceClass,
+    savingsContainerClass,
+    savingsClass,
+    installments,
+    installmentClass,
+    interestRateClass,
+    installmentContainerClass,
+    styles,
+    intl,
+  } = props
 
-  static propTypes = PricePropTypes
+  const { culture } = useRuntime()
 
-  static defaultProps = {
-    showListPrice: true,
-    showLabels: true,
-    showInstallments: false,
-    showSavings: false,
-    labelSellingPrice: null,
-  }
+  const { handles } = useCssHandles(CSS_HANDLES)
 
-  currencyOptions = {
-    style: 'currency',
-    currency: this.context.culture.currency,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }
-
-  render() {
-    const {
-      sellingPrice,
-      listPrice,
-      showListPrice,
-      showInstallments,
-      showLabels,
-      showSavings,
-      labelSellingPrice,
-      className,
-      loaderClass,
-      listPriceContainerClass,
-      listPriceLabelClass,
-      listPriceClass,
-      sellingPriceContainerClass,
-      sellingPriceLabelClass,
-      sellingPriceClass,
-      savingsContainerClass,
-      savingsClass,
-      installments,
-      installmentClass,
-      interestRateClass,
-      installmentContainerClass,
-      styles,
-      intl: { formatNumber },
-    } = this.props
-
-    let { classes } = this.props
-    // avoiding undefined verifications
-    classes = {
-      ...Price.defaultProps.classes,
-      ...classes,
-    }
-
-    if ((showListPrice && isNil(listPrice)) || isNil(sellingPrice)) {
-      return <Price.Loader loaderClass={loaderClass} {...styles} />
-    }
-
-    const differentPrices = showListPrice && sellingPrice !== listPrice
-
+  if ((showListPrice && isNil(listPrice)) || isNil(sellingPrice)) {
     return (
-      <div className={classNames(productPrice.priceContainer, className)}>
-        {differentPrices && (
-          <div
-            className={classNames(
-              productPrice.listPrice,
-              listPriceContainerClass
-            )}
-          >
-            {showLabels && (
-              <div
-                className={classNames(
-                  productPrice.listPriceLabel,
-                  'dib ph2 t-small-ns t-mini'
-                )}
-              >
-                <FormattedMessage id="pricing.from" />
-              </div>
-            )}
-            <span
-              className={classNames(
-                productPrice.listPriceValue,
-                listPriceClass
-              )}
-            >
-              {formatNumber(listPrice, this.currencyOptions)}
-            </span>
-          </div>
-        )}
-        <div
-          className={classNames(
-            productPrice.sellingPrice,
-            sellingPriceContainerClass
-          )}
-        >
-          {showLabels && listPrice !== sellingPrice && (
-            <div
-              className={classNames(
-                productPrice.sellingPriceLabel,
-                sellingPriceLabelClass
-              )}
-            >
-              {labelSellingPrice || <FormattedMessage id="pricing.to" />}
-            </div>
-          )}
-          <div
-            className={classNames(productPrice.sellingPrice, sellingPriceClass)}
-          >
-            {formatNumber(sellingPrice, this.currencyOptions)}
-          </div>
-        </div>
-        {showInstallments && (
-          <Installments
-            installments={installments}
-            showLabels={showLabels}
-            formatNumber={formatNumber}
-            currencyOptions={this.currencyOptions}
-            className={installmentContainerClass}
-            interestRateClass={interestRateClass}
-            installmentClass={installmentClass}
-          />
-        )}
-        {differentPrices && showSavings && (
-          <div
-            className={classNames(
-              productPrice.savingPrice,
-              savingsContainerClass
-            )}
-          >
-            <div
-              className={classNames(
-                productPrice.savingPriceValue,
-                savingsClass
-              )}
-            >
-              <FormattedMessage
-                id="pricing.savings"
-                values={{
-                  savings: formatNumber(
-                    listPrice - sellingPrice,
-                    this.currencyOptions
-                  ),
-                }}
-              />
-            </div>
-          </div>
-        )}
-      </div>
+      <ProductPriceLoader
+        loaderClass={`${loaderClass} ${handles.price_loader}`}
+        {...styles}
+      />
     )
   }
+
+  const mayShowListPrice = canShowListPrice(props)
+
+  const sellingPriceRange = sellingPriceList && getPriceRange(sellingPriceList)
+  const listPriceRange = listPriceList && getPriceRange(listPriceList)
+
+  return (
+    <div
+      className={classNames(
+        productPrice.priceContainer,
+        className,
+        handles.price_className
+      )}
+    >
+      {mayShowListPrice && (
+        <div
+          className={classNames(
+            productPrice.listPrice,
+            listPriceContainerClass,
+            handles.price_listPriceContainer
+          )}
+        >
+          {showLabels && (
+            <div
+              className={classNames(
+                productPrice.listPriceLabel,
+                listPriceLabelClass,
+                handles.price_listPriceLabel,
+                'dib ph2 t-small-ns t-mini'
+              )}
+            >
+              <IOMessage id={labelListPrice} />
+            </div>
+          )}
+          <Price
+            showPriceRange={showListPriceRange}
+            priceRange={listPriceRange}
+            price={listPrice}
+            rangeContainerClasses={classNames(
+              productPrice.listPriceValue,
+              listPriceRangeClass,
+              handles.price_listPriceRange
+            )}
+            singleContainerClasses={classNames(
+              productPrice.listPriceValue,
+              listPriceClass,
+              handles.price_listPrice
+            )}
+          />
+        </div>
+      )}
+      <div
+        className={classNames(
+          productPrice.sellingPrice,
+          productPrice.sellingPriceContainer,
+          sellingPriceContainerClass,
+          handles.price_sellingPriceContainer
+        )}
+      >
+        {showLabels && mayShowListPrice && (
+          <div
+            className={classNames(
+              productPrice.sellingPriceLabel,
+              sellingPriceLabelClass,
+              handles.price_sellingPriceLabel
+            )}
+          >
+            <IOMessage id={labelSellingPrice} />
+          </div>
+        )}
+        <Price
+          showPriceRange={showSellingPriceRange}
+          priceRange={sellingPriceRange}
+          price={sellingPrice}
+          rangeContainerClasses={classNames(
+            productPrice.sellingPrice,
+            productPrice.sellingPriceValue,
+            productPrice['sellingPriceValue--range'],
+            sellingPriceRangeClass,
+            handles.price_sellingPriceRange
+          )}
+          singleContainerClasses={classNames(
+            productPrice.sellingPrice,
+            productPrice.sellingPriceValue,
+            sellingPriceClass,
+            handles.price_sellingPrice
+          )}
+        />
+      </div>
+      {showInstallments && (
+        <Installments
+          installments={installments}
+          showLabels={showLabels}
+          className={`${installmentContainerClass} ${handles.price_installmentContainer}`}
+          interestRateClass={`${interestRateClass} ${handles.price_interestRate}`}
+          installmentClass={`${installmentClass} ${handles.price_installment}`}
+        />
+      )}
+      {mayShowListPrice && showSavings && listPrice - sellingPrice > 0 && (
+        <div
+          className={classNames(
+            productPrice.savingPrice,
+            savingsContainerClass,
+            handles.price_savingsContainer
+          )}
+        >
+          <div
+            className={classNames(
+              productPrice.savingPriceValue,
+              savingsClass,
+              handles.price_savings
+            )}
+          >
+            <FormattedMessage
+              id="store/pricing.savings"
+              values={{
+                savings: (
+                  <span className={handles.price_savings_value}>
+                    {formatCurrency({
+                      intl,
+                      culture,
+                      value: listPrice - sellingPrice,
+                    })}
+                  </span>
+                ),
+              }}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  )
 }
 
-Price.Loader = (loaderProps = {}) => (
-  <div
-    className={classNames(
-      productPrice.priceContainer,
-      productPrice.priceLoaderContainer,
-      loaderProps.loaderClass
-    )}
-  >
-    <ContentLoader
-      style={{
-        width: '100%',
-        height: '100%',
-      }}
-      width={300}
-      height={70}
-      preserveAspectRatio="xMinYMin meet"
-      {...loaderProps}
-    >
-      <rect
-        height="0.75em"
-        width="50%"
-        x="25%"
-        {...loaderProps[productPrice.listPriceLoader]}
-      />
-      <rect {...loaderProps[productPrice.sellingPriceLabelLoader]} />
-      <rect
-        height="1em"
-        width="70%"
-        x="15%"
-        y="1.25em"
-        {...loaderProps[productPrice.sellingPriceLoader]}
-      />
-      <rect
-        height="0.75em"
-        width="80%"
-        x="10%"
-        y="2.75em"
-        {...loaderProps[productPrice.installmentsPriceLoader]}
-      />
-      <rect {...loaderProps[productPrice.savingsPriceLoader]} />
-    </ContentLoader>
-  </div>
-)
+ProductPrice.propTypes = PricePropTypes
 
-Price.Loader.displayName = 'Price.Loader'
+const PriceWithIntl = injectIntl(ProductPrice)
 
-const priceWithIntel = injectIntl(Price)
+PriceWithIntl.defaultProps = {
+  showSellingPriceRange: false,
+  showListPriceRange: false,
+  showListPrice: true,
+  showLabels: true,
+  showInstallments: false,
+  showSavings: false,
+  labelSellingPrice: null,
+  labelListPrice: null,
+}
 
-priceWithIntel.schema = {
-  title: 'editor.productPrice.title',
-  description: 'editor.productPrice.description',
+PriceWithIntl.schema = {
+  title: 'admin/editor.productPrice.title',
+  description: 'admin/editor.productPrice.description',
   type: 'object',
   properties: {
-    labelSellingPrice: {
-      type: 'string',
-      title: 'editor.productPrice.labelSellingPrice',
-      default: Price.defaultProps.labelSellingPrice,
+    showSellingPriceRange: {
+      type: 'boolean',
+      title: 'admin/editor.productPrice.showSellingPriceRange',
+      default: PriceWithIntl.defaultProps.showSellingPriceRange,
+      isLayout: true,
+    },
+    showListPriceRange: {
+      type: 'boolean',
+      title: 'admin/editor.productPrice.showListPriceRange',
+      default: PriceWithIntl.defaultProps.showListPriceRange,
       isLayout: true,
     },
     showListPrice: {
       type: 'boolean',
-      title: 'editor.productPrice.showListPrice',
-      default: Price.defaultProps.showListPrice,
+      title: 'admin/editor.productPrice.showListPrice',
+      default: PriceWithIntl.defaultProps.showListPrice,
       isLayout: true,
     },
     showLabels: {
       type: 'boolean',
-      title: 'editor.productPrice.showLabels',
-      default: Price.defaultProps.showLabels,
+      title: 'admin/editor.productPrice.showLabels',
+      default: PriceWithIntl.defaultProps.showLabels,
       isLayout: true,
     },
     showInstallments: {
       type: 'boolean',
-      title: 'editor.productPrice.showInstallments',
-      default: Price.defaultProps.showInstallments,
+      title: 'admin/editor.productPrice.showInstallments',
+      default: PriceWithIntl.defaultProps.showInstallments,
       isLayout: true,
     },
     showSavings: {
       type: 'boolean',
-      title: 'editor.productPrice.showSavings',
-      default: Price.defaultProps.showSavings,
+      title: 'admin/editor.productPrice.showSavings',
+      default: PriceWithIntl.defaultProps.showSavings,
       isLayout: true,
     },
   },
 }
 
-export default priceWithIntel
+export default PriceWithIntl

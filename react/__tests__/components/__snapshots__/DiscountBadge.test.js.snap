@@ -3,15 +3,15 @@
 exports[`<DiscountBadge /> component should match snapshot with label 1`] = `
 <DocumentFragment>
   <div
-    class="discountContainer relative dib w-100"
+    class="discountContainer relative dib"
   >
     <div
-      class="t-mini white absolute right-0 pv2 ph3 bg-emphasis"
+      class="discountInsideContainer t-mini white absolute right-0 pv2 ph3 bg-emphasis z-1"
     >
+      10%  
       <span>
-        10%
+        LABEL
       </span>
-       LABEL
     </div>
     Test
   </div>
@@ -21,16 +21,12 @@ exports[`<DiscountBadge /> component should match snapshot with label 1`] = `
 exports[`<DiscountBadge /> component should match snapshot without label 1`] = `
 <DocumentFragment>
   <div
-    class="discountContainer relative dib w-100"
+    class="discountContainer relative dib"
   >
     <div
-      class="t-mini white absolute right-0 pv2 ph3 bg-emphasis"
+      class="discountInsideContainer t-mini white absolute right-0 pv2 ph3 bg-emphasis z-1"
     >
-      -
-      <span>
-        10%
-      </span>
-       
+      -10% 
     </div>
     Test
   </div>

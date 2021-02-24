@@ -1,22 +1,23 @@
-import categoriesHighlights from './categoriesHighlights.css'
-
 import PropTypes from 'prop-types'
 import { range, values } from 'ramda'
 import React, { Component } from 'react'
 
+import categoriesHighlights from './categoriesHighlights.css'
 import CategoryCard from './components/CategoryCard'
 import { ITEMS_PER_ROW, RECTANGULAR, SQUARED } from './constants.js'
 
 /**
  * CategoriesHighlights is a component responsible to display the
  * Categories highlighted in a department.
+ *
+ * @deprecated This component is deprecated.
  */
 class CategoriesHighlights extends Component {
   static propTypes = {
     /** Categories highlighted in the department */
     categoriesHighlighted: PropTypes.object,
     /** Flag which indicates if the categories highlighted should be displayed or not */
-    showCategoriesHighlights: PropTypes.bool,
+    showCategoriesHighlighted: PropTypes.bool,
     /** Number of categories highlighted to be displayed (it should be 2 or 4) */
     quantityOfItems: PropTypes.number.isRequired,
     /** Shape of the card box which wraps each category (it should be 'squared' or 'rectangular')  */
@@ -41,21 +42,21 @@ class CategoriesHighlights extends Component {
   }
 
   static getSchema = ({ quantityOfItems }) => {
-    let categoriesHighlightedProps = {}
+    const categoriesHighlightedProps = {}
 
     range(0, quantityOfItems || ITEMS_PER_ROW).forEach(index => {
       categoriesHighlightedProps[`category${index}`] = {
         type: 'object',
-        title: 'editor.categoriesHighlighted.category',
+        title: 'admin/editor.categoriesHighlighted.category',
         properties: {
           name: {
             type: 'string',
             default: '',
-            title: 'editor.categoriesHighlighted.item.categoryName',
+            title: 'admin/editor.categoriesHighlighted.item.categoryName',
           },
           image: {
             type: 'string',
-            title: 'editor.categoriesHighlighted.item.categoryImage',
+            title: 'admin/editor.categoriesHighlighted.item.categoryImage',
             default: '',
             widget: {
               'ui:widget': 'image-uploader',
@@ -66,19 +67,19 @@ class CategoriesHighlights extends Component {
     })
 
     return {
-      title: 'editor.categoriesHighlighted.title',
-      description: 'editor.categoriesHighlighted.description',
+      title: 'admin/editor.categoriesHighlighted.title',
+      description: 'admin/editor.categoriesHighlighted.description',
       type: 'object',
       properties: {
         showCategoriesHighlighted: {
           type: 'boolean',
-          title: 'editor.categoriesHighlighted.showCategoriesHighlighted',
+          title: 'admin/editor.categoriesHighlighted.showCategoriesHighlighted',
           default: false,
           isLayout: true,
         },
         quantityOfItems: {
           type: 'number',
-          title: 'editor.categoriesHighlighted.quantityOfItems',
+          title: 'admin/editor.categoriesHighlighted.quantityOfItems',
           enum: [2, 4],
           default: 2,
           widget: {
@@ -91,11 +92,11 @@ class CategoriesHighlights extends Component {
         },
         cardShape: {
           type: 'string',
-          title: 'editor.categoriesHighlighted.cardShape',
+          title: 'admin/editor.categoriesHighlighted.cardShape',
           enum: [SQUARED, RECTANGULAR],
           enumNames: [
-            'editor.categoriesHighlighted.cardShape.squared',
-            'editor.categoriesHighlighted.cardShape.rectangular',
+            'admin/editor.categoriesHighlighted.cardShape.squared',
+            'admin/editor.categoriesHighlighted.cardShape.rectangular',
           ],
           default: SQUARED,
           widget: {
@@ -108,7 +109,7 @@ class CategoriesHighlights extends Component {
         },
         categoriesHighlighted: {
           type: 'object',
-          title: 'editor.categoriesHighlighted.categoriesHighlighted',
+          title: 'admin/editor.categoriesHighlighted.categoriesHighlighted',
           properties: categoriesHighlightedProps,
           isLayout: false,
         },
@@ -126,7 +127,8 @@ class CategoriesHighlights extends Component {
 
     if (!showCategoriesHighlighted) return null
 
-    let categories = values(categoriesHighlighted).map(category => category)
+    const categories = values(categoriesHighlighted).map(category => category)
+
     range(categories.length, quantityOfItems).forEach(() => {
       categories.push({
         name: '',

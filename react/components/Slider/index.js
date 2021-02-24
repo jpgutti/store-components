@@ -6,9 +6,7 @@ import { NoSSR } from 'vtex.render-runtime'
 
 import Dots from './components/Dots'
 import Arrow from './components/Arrow'
-
 import getItemsPerPage from './utils/ItemsPerPage'
-
 import './global.css'
 import slider from './slider.css'
 
@@ -20,6 +18,8 @@ const VTEXClasses = {
 
 /**
  * Slick Slider Component.
+ *
+ * @deprecated This component is deprecated. Please use [vtex.slider-layout](https://github.com/vtex-apps/slider-layout) instead.
  */
 export default class SlickSlider extends Component {
   static propTypes = {
@@ -54,12 +54,14 @@ export default class SlickSlider extends Component {
       rightArrowClasses,
       dotsClasses,
     } = this.props
+
     const itemsPerPage = getItemsPerPage(
       this._slick,
       slideWidth,
       defaultItemWidth,
       sliderSettings.slidesToShow
     )
+
     const settings = { ...sliderSettings }
     const numItems = children.length
 
@@ -90,9 +92,11 @@ export default class SlickSlider extends Component {
     if (scrollByPage) {
       settings.slidesToScroll = settings.slidesToShow
     }
+
     if (settings.infinite === undefined) {
       settings.infinite = settings.slidesToScroll < numItems
     }
+
     return settings
   }
 
@@ -111,9 +115,12 @@ export default class SlickSlider extends Component {
         )}
       </ReactResizeDetector>
     )
+
     if (this.props.ssrFallback) {
+      // eslint-disable-next-line react/jsx-handler-names
       return <NoSSR onSSR={this.props.ssrFallback}>{component}</NoSSR>
     }
+
     return component
   }
 }

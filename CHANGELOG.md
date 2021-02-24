@@ -7,7 +7,1795 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.141.1] - 2021-02-17
+### Fixed
+- Image schema was not referencing dependencies, but only properties
+
+## [3.141.0] - 2021-02-10
+### Changed
+- `showVariationsLabels` prop to add the ability to show variation name (label) before each item's value.
+
+## [3.140.2] - 2021-02-02
+### Fixed
+- Lint issues.
+- Modifiers of Search Bar.
+
+## [3.140.1] - 2021-01-22
+### Fixed
+- Usage of `applyModifiers`.
+
+## [3.140.0] - 2021-01-22
+### Added
+- Modifier `video` to CSS Handle `figure` on `Product Image` to differ video thumbnails from image thumbnails.
+
+## [3.139.0] - 2021-01-19
+
+### Added
+- Modifier `video` to CSS Handle `thumbImg` on `Product Image` to differ video thumbnails from image thumbnails.
+
+## [3.138.3] - 2021-01-13
+
+### Fixed
+- ProductBrand to prevent render broken image when product does not have imageUrl.
+
+## [3.138.2] - 2020-12-30
+### Added
+- New keys to `product-images`.It prevent render problems when prefetch is enabled.
+
+## [3.138.1] - 2020-12-28
+### Changed
+- Makes search placeholder translatable
+
+## [3.138.0] - 2020-12-17
+### Deprecated
+- `buy-button`.
+  
+### Changed
+- Migrate to `vtex.css-handles@1.x`.
+
+## [3.137.0] - 2020-12-15
+### Added
+- `displayMode` prop to `product-images`
+
+## [3.136.3] - 2020-12-11
+### Fixed
+- SKUSelector types.
+
+## [3.136.2] - 2020-12-08
+
+### Changed
+- Migrate `user-address` to TypeScript.
+
+## [3.136.1] - 2020-12-08
+### Changed
+- Refactored `ProductDescription` to TypeScript.
+
+## [3.136.0] - 2020-12-08
+### Added
+- `withLink` prop on `ProductBrand`. It controls in which cases the component should link to the brand's page.
+### Changed
+- `logoWithLink` prop on `ProductBrand` is now deprecated.
+
+## [3.135.0] - 2020-12-08
+### Changed
+- Preload main image of `ProductImages`.
+
+## [3.134.0] - 2020-12-08
+### Added
+- New prop `containerMode` to `search-bar`.
+
+## [3.133.1] - 2020-12-08
+### Changed
+- Migrate `autocomplete-result-list` and `search-bar` to TypeScript.
+
+## [3.133.0] - 2020-12-07
+### Added
+- `ProductImages` displays a default placeholder image if no image or video is present.
+- `ProductImages` can receive a custom placeholder image by using the `placeholder` prop
+
+## [3.132.7] - 2020-12-07
+### Changed
+- Refactored ProductName to TypeScript.
+
+## [3.132.6] - 2020-12-02
+### Changed
+- `Logo` components implementation from JavaScript to TypeScript.
+
+## [3.132.5] - 2020-12-02
+### Changed
+- `ProductBrand` components implementation from JavaScript to TypeScript.
+
+## [3.132.4] - 2020-12-02
+### Changed
+- `Notification` components implementation from `js` to `tsx`.
+
+## [3.132.3] - 2020-12-01
+### Changed
+- Deprecate blocks: `newsletter`, `product-specifications`, and `product-highlights`.
+- Deprecate components: `Animation`, `CategoriesHighlights`, `CollectionBadges`, `DiscountBadge`, `GradientCollapse`, `Greeting`, `Newsletter`, `ProductHighlights`, `ProductSpecifications`, `Slider`, and `ProductSeparator`.
+
+## [3.132.2] - 2020-12-01
+### Changed
+- Refactored `Container` to TypeScript.
+
+## [3.132.1] - 2020-11-30
+### Changed
+- Refactored `AvailabilitySubscriber` to typescript.
+
+## [3.132.0] - 2020-11-18
+### Added
+- New prop `inputType` to `search-bar`.
+
+## [3.131.3] - 2020-11-13
+### Fixed
+- Navigating between product images using thumbnails was not working 
+
+## [3.131.2] - 2020-11-10
+### Changed
+- Refactor `CollectionBadge` to TypeScript.
+
+## [3.131.1] - 2020-10-27
+
+### Changed
+
+- Increase search bar delay
+
+## [3.131.0] - 2020-10-13
+
+### Added
+- `picture` and `source` to `SanitizedHTML` allowed tag list.
+- Fixing `vtex link`.
+
+## [3.130.2] - 2020-09-28
+### Fixed
+- Issue where product images would zoom out immediately in certain cases.
+
+## [3.130.1] - 2020-09-21
+
+### Added
+- `shouldUpdateOrderForm` prop to `ShippingSimulator`
+- `showIfEmpty` prop to `UserAddress` so that shopper with no address can add one
+- Event listener to `UserAddress` for `locationUpdated` event from `vtex.shopper-location`
+
+## [3.130.0] - 2020-09-21
+### Added
+- `product-sku-attributes` interface
+
+## [3.129.0] - 2020-09-18
+### Fixed
+- Added a deprecation disclaimer in the Product Specifications block documentation.
+
+### Added
+- Table head to `shipping-simulator`.
+- Missing CSS handles to `shipping-simulator`.
+
+## [3.128.1] - 2020-09-18
+### Fixed
+- SKU Selector issue with translated stores.
+
+## [3.128.0] - 2020-09-17
+### Added
+- Color translation for `fi-FI`.
+
+## [3.127.1] - 2020-09-09
+### Fixed
+- Add full path of content definitions to avoid breaking when extending some interface.
+
+## [3.127.0] - 2020-09-08
+### Changed
+- Render BackToTopButton only when visible.
+
+## [3.126.3] - 2020-09-04
+### Fixed
+- AddressInfo showing *null, null* when only postalCode is available
+
+## [3.126.2] - 2020-09-03
+
+### Added
+- `showStreet`, `showCityAndState`, `showPostalCode`, `showPrefix` props to `UserAddress`
+- CSS handles to `UserAddress`
+
+## [3.126.1] - 2020-09-03
+### Fixed
+- Encode forward slash in the search term.
+
+## [3.126.0] - 2020-09-02
+### Changed
+- [`ProductImages`] Updated Swiper from `v4` to `v6`.
+
+## [3.125.0] - 2020-08-28
+### Changed
+- Update shipping data on `orderForm` after shipping simulation.
+- Pre-fill postal code information with `orderForm`'s shipping data.
+
+## [3.124.0] - 2020-08-27
+### Added
+- New CSS Handles to `product-specifications`:
+  - `specificationsTableRow`
+  - `specificationsTableHead`
+  - `specificationsTableBody`
+
+## [3.123.8] - 2020-08-26
+### Fixed
+- Allow to pass `width` and `height` to `iframe` and `img` tags.
+- Allow to pass `rowspan` and `colspan` to `td` tags.
+
+## [3.123.7] - 2020-08-25
+### Fixed
+- Updated `README.md` file for `animation`, `slider` and `product-price` blocks to remove the `Deprecated` badge from the title.
+
+## [3.123.6] - 2020-08-25
+### Fixed
+- Documentation on `product-images` block.
+
+## [3.123.5] - 2020-08-24
+### Added
+- `object` and `embed` to `ProductDescription` allowed tag list.
+
+## [3.123.4] - 2020-08-18
+### Added
+- Calculate shipping when enter is pressed
+
+## [3.123.3] - 2020-08-14
+### Fixed
+- Issue of product specification in multilanguage stores.
+
+## [3.123.2] - 2020-08-12
+### Fixed
+- Prop name in docs.
+
+## [3.123.1] - 2020-08-11
+### Added
+- `meta` and `head` to `SanitizedHTML` allowed tag list.
+
+## [3.123.0] - 2020-08-11
+### Added
+- `imageSizes`, `defaultSize`, `maxSize` props to `HighQualityProductImage`.
+
+### Fixed
+- `HighQualityProductImage` reducing image size.
+
+## [3.122.7] - 2020-08-10
+### Added
+- `header` and `footer` to `SanitizedHTML` allowed tag list.
+
+## [3.122.6] - 2020-08-10
+### Fixed
+- Update `insane` to support parsing `<!doctype...>`.
+
+## [3.122.5] - 2020-08-05
+### Fixed
+- Allow `link` and `script` tags in `product-description`.
+- Allow attributes `rel`, `href`, and `type` for `link` tag in `SanitizeHtml`.
+
+## [3.122.4] - 2020-08-05
+### Fixed
+- Allow `link`, `body`, `html`, and `style` tags in `product-description`.
+- Allow `figure` tag in `SanitizeHtml`.
+
+## [3.122.3] - 2020-08-04
+### Fixed
+- SKUSelector `hideImpossibleCombinations` rendering a variation with no items attached.
+
+## [3.122.2] - 2020-08-04
+### Changed
+- Update eslint and re-format project.
+
+## [3.122.1] - 2020-07-30
+### Fixed
+- SKUSelector: Use `originalName` to match with `visibleVariations` prop.
+
+## [3.122.0] - 2020-07-29
+
+### Added
+- Add new `productImageTag--zoom` and `productImageTag--main` CSS Handles to Product Images component.
+
+## [3.121.0] - 2020-07-27
+### Added
+- Expose `SanitizedHTML` component.
+
+## [3.120.8] - 2020-07-22
+### Fixed
+- SKU Selector documentation (prop table).
+
+## [3.120.7] - 2020-07-21
+### Fixed
+- Use `originalName` in SKU Selector values.
+
+## [3.120.6] - 2020-07-21
+### Fixed
+- Use `originalName` in SKU Selector to avoid CSS classes to vary based on translation.
+
+## [3.120.5] - 2020-07-21
+### Fixed
+- Replace `insane` with `@vtex/insane` to support wildcard tag in `allowedAttributes`.
+
+## [3.120.4] - 2020-07-17
+### Fixed
+- Prevent `insane` from filtering out `iframe`s.
+
+## [3.120.3] - 2020-07-17
+### Fixed
+- Prevent `insane` defaults from being overriden if no extra config was passed.
+
+## [3.120.2] - 2020-07-17
+### Removed
+- Unused icons and buttons from `react-share`.
+
+## [3.120.1] - 2020-07-16
+### Changed
+- Remove `react-html-parser` in favor of `insane`.
+
+## [3.120.0] - 2020-07-16
+### Added
+- Inserted CSS Handle for active swiperBullet in Product Images Carousel.
+
+## [3.119.12] - 2020-07-16
+### Changed
+- Create a schema to the interface `image` without the description to remove it from the new CMS.
+
+## [3.119.11] - 2020-07-16
+### Changed
+- Change wrapper element of `share` icons from `div` to `button`.
+
+## [3.119.10] - 2020-07-15
+### Fixed
+- Revert changes from `3.119.9`.
+
+## [3.119.9] - 2020-07-15 [YANKED]
+### Changed
+- Replace `react-html-parser` with `html-react-parser`.
+
+## [3.119.8] - 2020-07-15
+### Fixed
+- Handling of recursive input values in assembly options.
+
+## [3.119.7] - 2020-07-14
+### Fixed
+- Search Bar documentation (New CSS Handles: `searchBarInnerContainer--opened` and `searchBarInnerContainer--filled`
+
+## [3.119.6] - 2020-07-08
+### Fixed
+- Animation component documentation by adding a deprecation badge and disclaimer.
+- Slider component documentation by adding a deprecation badge and disclaimer.
+
+## [3.119.5] - 2020-07-07
+### Fixed
+- Product Image not being updated whenever a color variant sku was selected.
+
+## [3.119.4] - 2020-07-01
+### Fixed
+- Issue where the background image of infocard component wouldn't be adjustable via CSS when lazyloaded.
+
+## [3.119.3] - 2020-06-25
+### Fixed
+- `open-modal` zoom option of `product-images` not working in mobile.
+
+## [3.119.2] - 2020-06-23
+### Fixed
+- Updated Product Image's README.md (fixed the `ModalZoom` prop type).
+
+## [3.119.1] - 2020-06-22
+### Fixed
+- `Newsletter` not allow empty spaces on email input.
+
+## [3.119.0] - 2020-06-19
+### Added
+- Props `ModalZoom` to `product-images`.
+- Option `'open-modal'` to prop `zoomMode` of `product-images`.
+- `product-images.high-quality-image` block.
+
+## [3.118.0] - 2020-06-17
+### Added
+- Apply modifiers to handle `searchBarInnerContainer` in `SearchBar`.
+
+### Fixed
+- CSS Handles table in README.md file: added the needed attribute to the `specificationItemProperty` handle.
+
+## [3.117.3] - 2020-06-15
+### Removed
+- Table of maintenance of major versions from docs.
+
+## [3.117.2] - 2020-06-10
+### Fixed
+- Lint problems.
+
+## [3.117.1] - 2020-06-09
+
+### Removed
+- `rest` query string.
+
+## [3.117.0] - 2020-06-08
+### Added
+- `contentType` prop to the ProductImages component.
+
+## [3.116.5] - 2020-06-08
+### Fixed
+- Local version of `react-intl`.
+
+## [3.116.4] - 2020-06-04
+### Fixed
+- `autocomplete` breaking because of `inputValue` beeing `undefined`.
+
+## [3.116.3] - 2020-06-04
+### Changed
+- if `search-bar` is in a modal it closes after navigation.
+
+## [3.116.2] - 2020-06-04
+### Changed
+- Bump dependency versions.
+
+## [3.116.1] - 2020-06-04
+### Fixed
+- Typos in the documentation.
+
+## [3.116.0] - 2020-06-03
+### Added
+- New data attribute on product specification with the name of the specification.
+
+## [3.115.3] - 2020-06-02
+### Fixed
+- Brand image link changed to brand slug instead of brand name.
+
+## [3.115.2] - 2020-05-29
+### Fixed
+- Revert release v3.110.1 that was making images to not load in Chrome 83.
+
+## [3.115.1] - 2020-05-28
+### Fixed
+- Fixed Product Price block documentation by adding a deprecation badge and disclaimer.
+
+## [3.115.0] - 2020-05-20
+### Added
+- Option to edit `callToActionLinkTarget` prop from the InfoCard on site editor.
+
+## [3.114.6] - 2020-05-19
+
+### Added
+
+- Back to Top Button added to readme
+
+## [3.114.5] - 2020-05-13
+
+### Fixed
+
+- Improve documentation for Buy Button block
+
+## [3.114.4] - 2020-05-12
+### Fixed
+- `Autocomplete` closing by clicking on an interactive component inside it.
+
+## [3.114.3] - 2020-05-07
+### Fixed
+- `Newsletter` now appears on the site-editor again.
+
+## [3.114.2] - 2020-05-05
+### Fixed
+- `proptypes` on InfoCard component.
+
+## [3.114.1] - 2020-05-05
+### Fixed
+- `BackToTopButton` not being rendered on mobile devices.
+
+## [3.114.0] - 2020-05-04
+### Added
+- `callToActionLinkTarget` and `linkTarget` props to the `InfoCard` component.
+
+## [3.113.0] - 2020-04-30
+### Added
+- `swiperBullet` css handle to `ProductImages` pagination bullet.
+
+### Changed
+- Use `vtex/swiper#4.5.2`.
+
+## [3.112.0] - 2020-04-29
+### Added
+- Added `BackToTopButton` Component.
+
+## [3.111.0] - 2020-04-23
+### Added
+- `textMode` prop to the InfoCard component.
+
+## [3.110.2] - 2020-04-20
+### Security
+- Bump versions of dependencies.
+
+## [3.110.1] - 2020-04-16
+### Fixed
+- `ProductImages` zoom out of the first image not working.
+
+## [3.110.0] - 2020-04-13
+### Added
+-  New prop `selectedSeller` to BuyButton.
+
+## [3.109.3] - 2020-04-08
+### Fixed
+- `InfoCard`s with no image not being rendered at all.
+
+## [3.109.2] - 2020-04-07
+### Changed
+- Allow `info-card` background to be loaded lazily.
+
+## [3.109.1] - 2020-04-06
+### Fixed
+- Problem where `InfoCard` component would render `banner` div even if no image was received.
+
+## [3.109.0] - 2020-03-25
+
+### Added
+- färger (sv_SE), farby (sk_SK) and boje (sr_RS) to the array of colors of `SKUSelector`
+
+## [3.108.0] - 2020-03-19
+### Added
+- kolory (pl_PL) and farve (dk_DK) to the array of colors of `SKUSelector`
+
+## [3.107.0] - 2020-03-17
+### Added
+- `showMoreButton`, `content` and `container` CSS Handles to `GradientCollapse`.
+
+## [3.106.0] - 2020-03-16
+### Added
+- Add `selected` modifier to the selected item in SKUSelector.
+
+## [3.105.3] - 2020-03-16
+### Fixed
+- Color name for Romanian.
+
+## [3.105.2] - 2020-03-13
+### Fixed
+- Color name for Italian.
+
+## [3.105.1] - 2020-03-09
+### Fixed
+- `SKUSelector` not showing any images if you pass the prop `thumbnailImage` and the images have a label, but none of them can pass to the test of the `thumbnailImage` regex.
+
+## [3.105.0] - 2020-03-04
+### Added
+- Some CSS Handles to the `SelectorItem` component.
+
+## [3.104.3] - 2020-02-21
+### Fixed
+- Add rootpath to view cart toast url.
+
+## [3.104.2] - 2020-02-19
+### Fixed
+- `SearchBar` moving when icon change from `search` to `clear`.
+
+## [3.104.1] - 2020-02-19
+### Fixed
+- `displayMode` error message being erroneously displayed.
+
+## [3.104.0] - 2020-02-19
+### Added
+- `displayMode` prop to define the behavior of buttons on the `SearchBar` component.
+
+### Changed
+- Deprecate `submitOnIconClick` prop from `SearchBar` in favor of `displayMode`.
+
+## [3.103.2] - 2020-02-19
+### Fixed
+- PropTypes error in ProductImages.
+
+## [3.103.1] - 2020-02-18
+### Changed
+- Import addressQuery directly.
+
+## [3.103.0] - 2020-02-14
+### Added
+- `contentOrder` prop to `product-images`.
+
+## [3.102.9] - 2020-02-13
+### Fixed
+- Only define a selected SKU if all visible variations are set.
+- Handle initial empty SKU selection.
+
+## [3.102.8] - 2020-02-13
+### Fixed
+- Stop considering empty arrays to `visibleSpecifications` and `hiddenSpecifications` in `ProductSpecfications`.
+
+## [3.102.7] - 2020-02-12
+### Fixed
+- Do not show "Item already in cart" toast if adding item with options.
+
+## [3.102.6] - 2020-02-11
+### Added
+- Dispatch `SELECT_IMAGE_VARIATION` action when manually selecting a image variant SKU
+
+## [3.102.5] - 2020-02-10
+### Added
+- Documentation to the `title` prop of the `image` block.
+
+## [3.102.4] - 2020-02-10
+### Added
+- Translations for the prop `title` of the `image` block.
+
+## [3.102.3] - 2020-02-10
+### Fixed
+- French color typo
+
+## [3.102.2] - 2020-01-30
+
+### Fixed
+- Fix specification values exibition. It was showing just the first value of the array.
+
+## [3.102.1] - 2020-01-23
+### Changed
+- Ordered `SearchBar` props on readme.
+
+### Added
+- `attemptPageTypeSearch` on `SearchBar`'s readme.
+
+## [3.102.0] - 2020-01-22
+### Added
+- Couleur for France, Kleuren for Netherlands and Colori for Italy.
+
+## [3.101.2] - 2020-01-22
+### Fixed
+- The order of the SKU variations in the product details page. The order should be the one in the catalog now.
+
+## [3.101.1] - 2020-01-21
+### Fixed
+- Outdated documentation on `ProductSpecifications` component.
+
+## [3.101.0] - 2020-01-17
+
+### Added
+- `visibility` prop to `sku-selector` to show it only when it has more than one sku
+
+## [3.100.1] - 2020-01-14
+### Fixed
+- Issue with image sizing in the SKU Selector.
+
+## [3.100.0] - 2020-01-13
+### Added
+- New `"slider"` value for `displayMode` from SKU Selector.
+- New props `sliderDisplayThreshold`, `sliderArrowSize` and `sliderItemsPerPage` to configure the `slider-layout` used by SKU Selector when `displayMode` is set to `"slider"`.
+
+## [3.99.0] - 2020-01-10
+### Added
+- New CSS handle `logoLink`.
+
+## [3.98.0] - 2020-01-02
+### Added
+- `showValueForVariation` to `SKUSelector`.
+
+### Changed
+- Deprecate `showValueNameForImageVariation` prop from `SKUSelector.
+
+## [3.97.1] - 2019-12-30
+### Fixed
+- Fix problem of swiper breaking when updating in a infinite loop.
+
+## [3.97.0] - 2019-12-26
+### Added
+- `minSearchTermLength` prop to `SearchBar`. Defines the minimum search term length allowed.
+- `autocompleteAlignment` prop to `SearchBar`. Autocomplete Horizontal alignment.
+- `openAutocompleteOnFocus` prop to `SearchBar`. Identify if autocomplete should be open on input focus or not.
+- `blurOnSubmit` prop to `SearchBar`. Identify if input should blur on submit.
+- `autocompleteFullWidth` prop to `SearchBar`. If true, the autocomplete will fill the whole window width.
+- `submitOnIconClick` prop to `SearchBar`. Identify if icon should submit on click.
+
+### Changed
+- Now, the search bar input and the autocomplete are different components. `search-bar` and `autocomplete-result-list` respectively.
+
+## [3.96.2] - 2019-12-20
+### Changed
+- Use installedAppPublic query in BuyButton.
+
+## [3.96.1] - 2019-12-20
+### Fixed
+- Space between variation name and `:`.
+
+## [3.96.0] - 2019-12-20
+### Added
+- Use UTM and UTMi params on addToCart mutation.
+
+## [3.95.8] - 2019-12-19
+### Fixed
+- Handle buy button click while order form is loading by handling it gracefully and not showing the tooltip.
+
+## [3.95.7] - 2019-12-19
+### Changed
+- Update `react-id-swiper` dependency to 3.3.2, fixes issues in ProductImages.
+
+## [3.95.6] - 2019-12-18
+### Fixed
+- Problem with ProductImages scroll when selecting other SKUs.
+
+## [3.95.5] - 2019-12-18
+### Fixed
+- Prevent add to cart while orderForm is loading.
+
+## [3.95.4] - 2019-12-17
+
+## Changed
+- Updated documentation: added `blockClass` prop to the Product Price docs and updated the fork disclaimer
+
+## [3.95.3] - 2019-12-16
+### Changed
+- Render SKUSelector on server.
+- Render first product image on server.
+
+## [3.95.2] - 2019-12-16
+- Added spec `farbe` for DE
+
+## [3.95.1] - 2019-12-12
+### Fixed
+-  Problematic issue with the container css handle.
+
+## [3.95.0] - 2019-12-11
+### Added
+- Support for `icon-search` and `icon-close` blocks to be received by `SearchBar` components.
+
+## [3.94.0] - 2019-12-11
+### Changed
+- Use `withCssHandles` instead of using styles to generate the CSS handles of the `Container` compenent.
+
+## [3.93.0] - 2019-12-09
+### Changed
+- Add missing handles to `ProductImages`and use `useCssHandles` hook instead of styles file.
+
+## [3.92.8] - 2019-12-09
+### Changed
+- Updated documentation for the following `store-components` blocks: Image, Info Card, Buy Button, Logo, Product Brand, Product Image, Product Name, Product Price and Shipping Simulator.
+
+## [3.92.7] - 2019-12-06
+### Fixed
+- Some tests that were breaking since migration to react-apollo@3.x.
+
+### Changed
+- Improved some tests.
+- Upgrade TS version.
+- Use optional chaining in SKUSelector, code improvements.
+
+## [3.92.6] - 2019-12-06
+
+## [3.92.5] - 2019-12-05
+### Added
+- Image to SKU selector documentation
+
+## [3.92.4] - 2019-12-05
+### Changed
+- Documentation format
+
+## [3.92.3] - 2019-12-05
+
+## [3.92.2] - 2019-12-05
+
+## [3.92.1] - 2019-12-03
+### Fixed
+- Private installedApp query should be client only.
+
+## [3.92.0] - 2019-12-03
+### Changed
+- `BuyButton` redirects to the appropriate cart depending on the version of `vtex.checkout` installed in the account.
+
+## [3.91.1] - 2019-11-26
+### Fixed
+- In availability subscribe mutation, send all args as string.
+
+## [3.91.0] - 2019-11-21
+### Added
+- `displayMode` to `SKUSelector`.
+
+## [3.90.0] - 2019-11-21
+### Added
+- Prop `placeholder` to `SearchBar`'s schema.
+
+## [3.89.0] - 2019-11-21
+### Added
+- Prop `title` to `ProductDescription`.
+
+## [3.88.0] - 2019-11-18
+### Added
+- `thumbnailAspectRatio` and `thumbnailMaxHeight` props on `product-images`.
+
+## [3.87.0] - 2019-11-13
+### Added
+- `showNavigationArrows` and `showPaginationDots` props on `product-images`.
+
+## [3.86.1] - 2019-11-13
+### Fixed
+- Bug of selected images of `ProductImages`, now the control of the active class is in the component instead of the `SwiperJS` lib.
+
+## [3.86.0] - 2019-11-13
+### Added
+- Support to block class.
+
+### Fixed
+- Verify that the item has been added to the cart by filtering `skuId` and `seller` in the BuyButton.
+
+## [3.85.0] - 2019-11-12
+### Added
+- Option to edit `visibleSpecifications` and `hiddenSpecifications` in Site Editor.
+
+## [3.84.2] - 2019-11-12
+### Fixed
+- `thumbnailImage` prop from `SKUSelector` keeping images that has no labels.
+
+## [3.84.1] - 2019-11-12
+### Fixed
+- `ProductImages`' thumbs always keep active the first item.
+
+## [3.84.0] - 2019-11-08
+### Changed
+- Default value of `hiddenImages` from `ProductImages`.
+- `SKUSelector` and `ProductImages` now uses `imageLabel` instead of `imageText` to hide or show an image of the SKU.
+
+### Fixed
+- `SKUSelector` using objects of product's context that might be undefined.
+
+## [3.83.1] - 2019-11-07
+### Changed
+- Default aspect ratio of `ProductImages` to `auto`.
+
+## [3.83.0] - 2019-11-07
+### Changed
+- `ProductImages` uses `img` instead of `canvas`, and removes blurred loader.
+
+## [3.82.2] - 2019-11-07
+
+## [3.82.1] - 2019-11-07
+### Fixed
+- `BuyButton` crashing if there is no component above it that provide the context of product.
+
+## [3.82.0] - 2019-11-06
+### Added
+- `initialSelection` and `showVariationsErrorMessage` to `SKUSelector`.
+- `showTooltipOnSkuNotSelected` to `BuyButton`.
+
+### Changed
+- `BuyButton` now only adds a product to the cart if all variations have one option selected.
+- Show an error next to the variation name of the `SKUSelector` if you try to add to the cart before selecting all variations of the product.
+
+## [3.81.1] - 2019-11-06
+### Changed
+- `collapsable` prop to `collapsible` on `ProductSpecifications`.
+
+## [3.81.0] - 2019-11-06
+### Added
+- CSS handles to the savings value.
+
+## [3.80.3] - 2019-11-05
+### Fixed
+- `collapsable` prop not being passed down from the Wrapper to the actual component on `ProductSpecifications`.
+
+## [3.80.2] - 2019-11-01
+### Fixed
+- Width property being overwritten when using ProductImages in horizontal mode.
+
+## [3.80.1] - 2019-11-01
+
+## [3.80.0] - 2019-10-31
+### Added
+- New `collapsable` prop to `ProductSpecifications`.
+
+## [3.79.3] - 2019-10-29
+
+## [3.79.2] - 2019-10-29
+### Added
+- Missing docs of `SKUSelector`.
+
+## [3.79.1] - 2019-10-28
+### Fixed
+-  `GradientCollapse` not working if its parent doesn't control the `collapse` state.
+
+## [3.79.0] - 2019-10-28
+### Added
+- `customSearchPageUrl` prop to `SearchBar`.
+
+## [3.78.3] - 2019-10-25
+### Fixed
+- Case where slides prop would be undefined and cause crash on ProductImages.
+
+## [3.78.2] - 2019-10-25
+### Fixed
+- Price savings to prevent it from showing `Save 0`.
+
+## [3.78.1] - 2019-10-24
+### Fixed
+- `GradientCollapse` in safari not giving the full size to it's children.
+
+## [3.78.0] - 2019-10-24
+### Fixed
+- `SearchBar` making a request in every change of `inputValue`.
+
+## [3.77.0] - 2019-10-23
+### Added
+- More css handles to the `ProductPrice`
+
+## [3.76.1] - 2019-10-23
+### Fixed
+- Infinity loop in product page because of calling `onSKUSelected`.
+
+## [3.76.0] - 2019-10-23
+### Added
+- `collapsed` and `onCollapsedChange` props to `GradientCollapse` in order to be possible control if the component is collapsed or not from outsize of `GradientCollapsed`.
+- `shouldCollapseOnTabChange` to `ProductSpecifications`.
+
+### Changed
+- Make `GradientCollapse` as a Funcional Component.
+- The "See more" button from `GradientCollapse`is now a `button` instead of a `div`.
+
+### Fixed
+- `GradientCollapse` not changing the size of the container when children change.
+
+## [3.75.1] - 2019-10-23
+### Fixed
+- Spanish translations.
+
+## [3.75.0] - 2019-10-23
+### Added
+- `matchedImagesProps`, `variationsSpacing` and `variationsSpacing` to `SKUSelector`.
+- `shouldAddToCart` to `BuyButton`.
+
+### Changed
+- Remove images that has the value of prop `hiddenImages` on it's property `imageText` from `ProductImages`.
+- Remove or keep only the images that has the value of prop `thumbnailImage` on it's property `imageText` from `SKUSelector`.
+- `SKUSelector` will just add spaces between variations instead of adding a spacing at the end of all variations.
+
+### Fixed
+- Not calling `onSKUSelected` at second render when `SKUSelector` sets an SKU.
+
+## [3.74.1] - 2019-10-18
+### Fixed
+- Problem causing the "Compras API" bot to break.
+
+## [3.74.0] - 2019-10-18
+### Added
+- CSS Handles to some views in `SKUSelector`.
+- CSS classes to BuyButton.
+
+## [3.73.1] - 2019-10-18
+
+## [3.73.0] - 2019-10-15
+### Added
+- New `specificationsTablePropertyHeading`, `specificationsTableSpecificationHeading`, `specificationItemProperty` and `specificationItemSpecifications` CSS handles to `ProductSpecifications`.
+- New `resultsItemName`, `searchBarInnerContainer`, `autoCompleteOuterContainer`, `spinnerInnerContainer` and `spinnerContainer` CSS handles to `SearchBar`.
+- New `infoCardCallActionText` CSS handle to `InfoCard`.
+- New `productBrandLogoWrapper`, `productBrandLogoLink`, `productBrandLogoSpacer` and `productBrandNameSpacer` CSS handles to `ProductBrand`.
+- New `productDescriptionTitle` and `productDescriptionText` CSS handles to `ProductDescription`.
+
+### Changed
+- Added the new `css-handles` on the following components: Icon & Newsletter
+
+## [3.72.3] - 2019-10-14
+### Changed
+- In `ProductSpecifications`, use specificationGroups resolver to get translated values.
+
+## [3.72.2] - 2019-10-14
+### Fixed
+- `ProductImages`: fix thumbnails arrows when orientation is horizontal.
+
+## [3.72.1] - 2019-10-11
+### Changed
+- Update `react-share`.
+
+## [3.72.0] - 2019-10-10
+### Added
+- `imageHeight` and `imageWidth` to `SkuSelector`.
+
+## [3.71.3] - 2019-10-03
+### Fixed
+- `DiscountBadge` would show negative percentages when the actual selling price of a product is higher then it's original one.
+
+## [3.71.2] - 2019-10-03
+### Fixed
+- dont add input value to options in add to cart, if object is empty.
+
+## [3.71.1] - 2019-09-24
+### Changed
+- Release with fixed `builder-hub`.
+
+## [3.71.0] - 2019-09-24
+### Changed
+- Set SKUSelector visibility in product context.
+
+## [3.70.1] - 2019-09-19
+### Fixed
+- Cleaned up some extraneous dependencies.
+
+### Removed
+- Loader type "linear" from product images, falls back into spinner loader.
+
+## [3.70.0] - 2019-09-19
+### Added
+- `customToastURL` prop to `BuyButton`.
+
+## [3.69.0] - 2019-09-18
+### Added
+- Send InputValues to GraphQL.
+
+### Changed
+- Render logo as `amp-img` if in AMP page.
+
+## [3.68.7] - 2019-09-10
+### Changed
+- Use autocmplete query from `search-graphql` in `SearchBar`.
+
+## [3.68.6] - 2019-09-05
+
+### Fixed
+- Remove percentual width/height from `ContentLoader`
+
+## [3.68.5] - 2019-09-05
+
+## [3.68.4] - 2019-09-03
+### Fixed
+- Fixes regarding videos, fix ProductImages handling youtube videos.
+- Fix possible deadlock on ProductImages.
+
+## [3.68.3] - 2019-09-03
+### Fixed
+- Fix DiscountBadge z-index.
+
+## [3.68.2] - 2019-08-30
+
+## [3.68.1] - 2019-08-30
+### Fixed
+- Default parameter when `usePWA()` is undefined.
+
+## [3.68.0] - 2019-08-29
+### Added
+- Show install prompt when clicking `buyButton`.
+
+## [3.67.3] - 2019-08-29
+### Fixed
+- `SearchBar`: Issue where clicking on the search term would not work properly when `attemptPageTypeSearch` is enabled.
+
+## [3.67.2] - 2019-08-29
+### Fixed
+- Issue where buy button would throw an error when getting "loading of undefined".
+
+## [3.67.1] - 2019-08-29
+
+## [3.67.0] - 2019-08-28
+### Added
+- Notification bar content schema for i18n support
+
+## [3.66.4] - 2019-08-28
+### Fixed
+- `Image`: properly use CMS translatable props with formatIOMessage.
+
+### Changed
+
+- `ProductPrice`: show list price even if selling price is a range and list price is not.
+
+## [3.66.2] - 2019-08-27
+### Fixed
+- Fixes IE11 Swiper issue, by importing a forked version.
+
+## [3.66.1] - 2019-08-23
+
+### Fixed
+
+- Prevent addToCart while orderForm is loading.
+
+## [3.66.0] - 2019-08-21
+
+### Added
+
+- Add new message to be shown in the Toast when the user tries to add an item to the minicart that is already there.
+
+## [3.65.1] - 2019-08-21
+
+### Added
+
+- Added spec `colour` for UK
+
+## [3.65.0] - 2019-08-21
+
+### Added
+
+- Add CSS Handle to target the search bar icon (`searchBarIcon`).
+
+## [3.64.0] - 2019-08-21
+
+### Added
+
+- Query params `_q` and `_c` so it's possible to Google Analytics to track the searched terms and category
+
+## [3.63.1] - 2019-08-21
+
+### Fixed
+
+- Search Bar height CSS.
+
+## [3.63.0] - 2019-08-20
+
+### Changed
+
+- How `ProductBrand` can get the brand information. It is now possible to get this data through props, but if the props are `undefined` the value will still be obtained through the product context
+
+## [3.62.2] - 2019-08-15
+
+### Fixed
+
+- `SearchBar`: the `placeholder` property was not working
+
+## [3.62.1] - 2019-08-13
+
+### Changed
+
+- `BuyButton`: if isOneClickBuy, call graphql directly, skip optimistic add.
+
+## [3.62.0] - 2019-08-12
+
+### Added
+
+- Support to videos (YouTube and Vimeo) in `ProductImages` carousel
+
+## [3.61.0] - 2019-08-12
+
+## [3.60.1] - 2019-08-08
+
+### Changed
+
+- `addToAvailabilitySubscriberMutation`'s mutation to `createDocument`
+
+## [3.60.0] - 2019-08-06
+
+### Added
+
+- `discountInsideContainer` class to DiscountBadge.
+
+## [3.59.1] - 2019-08-05
+
+### Fixed
+
+- The `ResultList` now have the correct size when the `SearchBar` is bigger than 320px
+
+## [3.59.0] - 2019-08-05
+
+### Added
+
+- New prop `showValueNameForImageVariation` to `sku-selector`.
+- New CSS handle `skuSelectorNameSeparator`.
+- New CSS handle `skuSelectorSelectorImageValue`.
+- New CSS handle `skuSelectorTextContainer`.
+
+### Changed
+
+- Migrate SKUSelector to Typescript.
+
+## [3.58.1] - 2019-08-02
+
+### Fixed
+
+- Product Price classes in sellingPrice. Added `sellingPriceValue` and `sellingPriceValue--range` to value element. Also added `sellingPriceContainer` as a replacement to the `sellingPrice` in the parent element.
+
+## [3.58.0] - 2019-08-01
+
+### Added
+
+- Toast message in `BuyButton` when an item is added offline to minicart.
+
+## [3.57.3] - 2019-07-30
+
+### Fixed
+
+- Remove unnecessary autcomplete query when input value is empty.
+
+## [3.57.2] - 2019-07-26
+
+### Fixed
+
+- Postal code validation in ShippingSimulator.
+
+## [3.57.1] - 2019-07-26
+
+### Fixed
+
+- Correctly add logic to parse assembly options state from productContext in BuyButton.
+
+## [3.57.0] - 2019-07-25
+
+### Added
+
+- Added the `logoWithLink` prop to the `ProductBrand`
+
+## [3.56.1] - 2019-07-24
+
+### Added
+
+- Added link prop to image component
+
+## [3.56.0] - 2019-07-23
+
+### Added
+
+- **ProductImages:** Prop `displayThumbnailsArrows`.
+
+## [3.55.0] - 2019-07-23
+
+### Added
+
+- Pass more data down to Minicart addToCart to fulfill analytics data.
+
+## [3.54.2] - 2019-07-19
+
+### Fixed
+
+- InfoCard missing to use formatIOMessage in a localized url.
+
+## [3.54.1] - 2019-07-19
+
+### Fixed
+
+- Issue where going back to a product with variations would render empty variations.
+
+## [3.54.0] - 2019-07-17
+
+### Added
+
+- Format currency based on sales channel configuration.
+
+## [3.53.1] - 2019-07-11
+
+### Fixed
+
+- Protect against undefined assemblyOptions in state.
+
+## [3.53.0] - 2019-07-11
+
+### Added
+
+- Add support for adding to cart Assembly Options in buy button.
+- Add prop to show total price on buy button.
+
+## [3.52.3] - 2019-07-11
+
+### Fixed
+
+- Fix UserAddress Proptype.
+
+## [3.52.2] - 2019-07-11
+
+### Fixed
+
+- Make addressQuery query have ssr: false, because it has scope private.
+
+## [3.52.1] - 2019-07-11
+
+### Changed
+
+- Use new address query on `UserAddress`.
+
+## [3.52.0] - 2019-07-08
+
+### Changed
+
+- Uses product id as internal url
+
+### Added
+
+- Types of props on Availability Subscriber documentation.
+
+## [3.51.3] - 2019-07-05
+
+### Added
+
+- Documentation on Product Brand props.
+- Product Brand and Product Image on the list of components of the main Read Me.
+
+## [3.51.2] - 2019-07-04
+
+### Fixed
+
+- Show SKUSelector even when SKU items is one.
+
+## [3.51.1] - 2019-07-04
+
+### Fixed
+
+- Read me of Availability subscriber. Explain that it doesn't warn users.
+- Default text of component to make it less misleading.
+
+## [3.51.0] - 2019-07-04
+
+### Added
+
+- `htmlId` prop on InfoCard
+
+## [3.50.1] - 2019-07-03
+
+### Removed
+
+- Deprecated the usage of `productId` to navigate to product urls
+
+## [3.50.0] - 2019-07-02
+
+### Changed
+
+- Uses `productId` to navigate to product urls
+
+## [3.49.1] - 2019-07-02
+
+### Fixed
+
+- Issue with updating state of SKUSelector on ProductContext.
+
+## [3.49.0] - 2019-07-01
+
+### Added
+
+- `ProductDescription` - Add `collapseContent` prop.
+
+## [3.48.0] - 2019-06-27
+
+### Added
+
+- Prop `attemptPageTypeSearch` on `search-bar`; if `true`, uses the term the user has inputted to try to navigate to the proper page type (e.g. a department, a brand, a category)
+
+## [3.47.5] - 2019-06-27
+
+### Fixed
+
+- Build assets with new builder hub.
+
+## [3.47.4] - 2019-06-26
+
+### Fixed
+
+- Fixes NaN being sent to search result width.
+
+## [3.47.3] - 2019-06-26
+
+### Changed
+
+- Slugify variation option name added to the variation item.
+
+## [3.47.2] - 2019-06-25
+
+### Fixed
+
+- Sets min width to search results box.
+
+## [3.47.1] - 2019-06-24
+
+### Changed
+
+- Show option to search for term instead of showing "no matches" in search autocomplete.
+
+### Fixed
+
+- Fix spaces in search autocomplete list.
+
+## [3.47.0] - 2019-06-24
+
+### Added
+
+- **ProductBrand** component, along with **product-brand** block.
+
+## [3.46.2] - 2019-06-24
+
+### Fixed
+
+- **NotificationBar** is now editable via Storefront.
+
+## [3.46.1] - 2019-06-21
+
+## [3.46.0] - 2019-06-21
+
+### Added
+
+- Added support for rootPath in one click buy mode.
+
+## [3.45.3] - 2019-06-19
+
+### Fixed
+
+- Hardcoded "BRL" currency on Shipping Simulator component.
+
+## [3.45.2] - 2019-06-19
+
+### Fixed
+
+- Bug with vanishing `-` sign on DiscountLabel when it had empty labels.
+
+## [3.45.1] - 2019-06-18
+
+### Changed
+
+- Wording on "added to cart" toast.
+
+## [3.45.0] - 2019-06-18
+
+### Added
+
+- "View cart" button on "Added to cart" toast.
+
+## [3.44.0] - 2019-06-17
+
+### Changed
+
+- `SKUSelector` now supports many variations for skus, not only 2.
+- Add layout prop `hideImpossibleCombinations` for `SKUSelector`, with docs.
+
+## [3.43.7] - 2019-06-12
+
+### Fixed
+
+- Use require to conditionally import Swiper in `ProductImages` to not break SSR.
+
+## [3.43.6] - 2019-06-11
+
+### Added
+
+- See more button for SKUSelector with a lot of items in a variation.
+- Schema for `SKUSelector` wtih `seeMoreLabel, maxItems` prop.
+
+## [3.43.5] - 2019-06-10
+
+### Fixed
+
+- Issue on the SearchBar suggestions where the user couldn't select items, on mobile devices.
+
+## [3.43.4] - 2019-06-10
+
+### Fixed
+
+- `InfoCard`: Make `imageUrl` and `mobileImageUrl` have image-uploader ui widget on storefront.
+
+## [3.43.3] - 2019-06-10
+
+### Fixed
+
+- `InfoCard`: change null default values to empty strings.
+
+## [3.43.2] - 2019-06-07
+
+### Fixed
+
+- Fixed issue that causes syntax error on IE11, due to the use of ES6 features.
+
+## [3.43.1] - 2019-06-07
+
+### Fixed
+
+- Fix bad release of 3.43.0 (no real change in code).
+
+## [3.43.0] - 2019-06-06
+
+### Added
+
+- i18n using `vtex.native-types` to allow `NewsLetter` to respond properly to content i18n.
+
+## [3.42.8] - 2019-06-06
+
+## [3.42.7] - 2019-06-06
+
+### Fixed
+
+- Compatibility with custom non-flexible product-pages in all components used in ProductDetails.
+
+## [3.42.6] - 2019-06-05
+
+### Fixed
+
+- Bug where the product images thumbnail gallery would scroll infinitely.
+
+## [3.42.5] - 2019-06-05
+
+### Fixed
+
+- Hides SKU selector when there are no variations to be selected.
+- `BuyButton`: use given props over context, if set.
+
+## [3.42.4] - 2019-06-05
+
+### Fixed
+
+- Use props as default value instead of context.
+
+## [3.42.3] - 2019-06-05
+
+### Fixed
+
+- Remove `showProductPrice` rule from `ProductPrice` wrapper.
+
+## [3.42.2] - 2019-06-05
+
+### Fixed
+
+- HOTFIX: Rollback SKUSelector and ProductImage do version without Wrapper.
+
+## [3.42.1] - 2019-06-04
+
+### Fixed
+
+- Get image of smaller size for `SKUSelector` and `ProductImages` images.
+
+## [3.42.0] - 2019-06-04
+
+### Added
+
+- Wrapper to components to consume product context.
+
+## [3.41.2] - 2019-05-28
+
+### Added
+
+- Content schema to `ProductPrice`.
+
+## [3.41.1] - 2019-05-28
+
+### Fixed
+
+- Remove `showInstallPrompt` unused feature.
+
+## [3.41.0] - 2019-05-27
+
+### Added
+
+- Added props `sellingPriceRange, showListPriceRange` and `showSellingPriceRange, showListPriceRange` to `productPrice` component.
+
+## [3.40.0] - 2019-05-27
+
+### Added
+
+- Content schema to `InfoCard`.
+
+## [3.39.0] - 2019-05-27
+
+### Added
+
+- i18n using `vtex.native-types` to allow `DiscountBadge` to respond properly to content i18n.
+
+## [3.38.1] - 2019-05-26
+
+### Fixed
+
+- Fix warnings on the components `Image`, `BuyButton`, and `Logo`.
+
+## [3.38.0] - 2019-05-25
+
+### Added
+
+- Added some CSS overrides classes to infocard and logo.
+
+## [3.37.2] - 2019-05-21
+
+### Fixed
+
+- Removed `w-100` from `DiscountBadge` to avoid it to pass the image width.
+
+## [3.37.1] - 2019-05-20
+
+### Fixed
+
+- Enable `ShippingSimulator` to accept any postal code format and validate using the country rules.
+
+## [3.37.0] - 2019-05-17
+
+### Added
+
+- 'Open Minicart' feature after click on `BuyButton`.
+
+## [3.36.1] - 2019-05-13
+
+### Fixed
+
+- Fixed bug where clicking on search result items would just close the search results list.
+
+## [3.36.0] - 2019-05-10
+
+### Added
+
+- Send to the service worker a 'installPrompt' event when clicking the `BuyButton`.
+
+## [3.35.0] - 2019-05-09
+
+### Added
+
+- Schema to `Logo` component.
+
+## [3.34.0] - 2019-05-09
+
+### Added
+
+- `labelListPrice` prop in `ProductPrice`.
+
+## [3.33.1] - 2019-05-09
+
+### Fixed
+
+- Fix z-index issue on the search ResultList component.
+
+## [3.33.0] - 2019-05-08
+
+### Added
+
+- Add the `carouselImagePlaceholder` CSS handler to allow custom image placeholders.
+
+## [3.32.2] - 2019-05-03
+
+### Fixed
+
+- Enable zoom with one click instead of two in `ProductImages`.
+
+## [3.32.1] - 2019-05-03
+
+### Fixed
+
+- Instead of rendering a content loader when there is no image to be rendered in `Carousel`, it now renders a placeholder.
+
+## [3.32.0] - 2019-05-02
+
+### Changed
+
+- Hide `InstallmentsPrice` when there's only _1x_ options.
+
+## [3.31.0] - 2019-04-30
+
+### Added
+
+- Add zoom types and implement zoom `ìn-gallery` in `ProductImages` component.
+
+## [3.30.2] - 2019-04-30
+
+### Fixed
+
+- Add `brand` props to send to minicart on `BuyButton`.
+
+## [3.30.1] - 2019-04-29
+
+### Added
+
+- Allow case insensitive product specifications filter.
+
+## [3.30.0] - 2019-04-26
+
+### Added
+
+- Added props `hiddenSpecifications` and `visibleSpecifications` to `productSpecifications` component.
+
+## [3.29.2] - 2019-04-25
+
+### Fixed
+
+- Availability of a specific variation is based on all SKU's now.
+
+## [3.29.1] - 2019-04-25
+
+### Changed
+
+- Add isLayout to `InfoCard` props.
+
+## [3.29.0] - 2019-04-25
+
+### Added
+
+- CSS classes for reaching a sku variation name and value.
+
+## [3.28.1] - 2019-04-25
+
+### Fixed
+
+- Fix propType `ShippingSimulator` error, removed warning from console.
+
+## [3.28.0] - 2019-04-24
+
+### Changed
+
+- Scopes messages by domain (`admin/` and `store/`)
+
+## [3.27.0] - 2019-04-24
+
+### Fixed
+
+- Notification bar width is now 100%.
+
+## [3.26.0] - 2019-04-24
+
+### Changed
+
+- Make `UserAddress` use modal block.
+
+## [3.25.10] - 2019-04-22
+
+### Added
+
+- CSS class to `InfoCard` image.
+
+### Changed
+
+- Make `InfoCard` headline and subline now support HTML and are sanitized before being displayed.
+
+## [3.25.9] - 2019-04-18
+
+## [3.25.8] - 2019-04-18
+
+### Fixed
+
+- Variations not being grouped.
+
+## [3.25.7] - 2019-04-18
+
+### Fixed
+
+- Blurred Loader image blinking.
+
+## [3.25.6] - 2019-04-15
+
+### Changed
+
+- Remove sort of sku item variations.
+
+## [3.25.5] - 2019-04-12
+
+### Added
+
+- Added `container` CSS handle to Container.
+
+### Changed
+
+- Reduced horizontal padding for Container on wide screen sizes.
+
+## [3.25.4] - 2019-04-12
+
+### Fixed
+
+- Ensure mutation to require acronym as String
+
+## [3.25.3] - 2019-04-11
+
+### Changed
+
+- Use `insane` lib to sanitize HTML on `NotificationBar`.
+
+## [3.25.2] - 2019-04-11
+
+### Added
+
+- Add `imageActionUrl` prop to `InfoCard`.
+
+## [3.25.1] - 2019-04-10
+
+### Changed
+
+- Limit width of Container
+
+## [3.25.0] - 2019-04-10
+
+### Added
+
+- New block `image`.
+
+## [3.24.3] - 2019-04-10
+
+## [3.24.2] - 2019-04-09
+
+## [3.24.1] - 2019-04-09
+
+### Fixed
+
+- Add safeguard to InfoCard `blockClass` prop
+
+## [3.24.0] - 2019-04-09
+
+### Fixed
+
+- Fix propType name for `showCategoriesHighlighted` in `CategoriesHighlights`.
+- Fix SKUSelector displaying the wrong selected item.
+
+### Added
+
+- InfoCard new property `blockClass`.
+
+### Fixed
+
+- InfoCard schema.
+- InfoCard CMS labels.
+
+## [3.23.0] - 2019-04-09
+
+### Added
+
+- Pinterest share option on `Share`.
+
 ## [3.22.2] - 2019-04-05
+
 ### Fixed
 
 - SKU Selector not changing selected item.
@@ -23,6 +1811,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - Place thumbs according to position on `ProductImages`.
+
+### Fixed
+
+- Misplaced `Logo` position on mobile.
+
+### Changed
+
+- Changed `Logo` to be a functional component instead of a class.
+- Remove unused `VtexLogo` along with the props `color` and `showLabel` in `Logo`.
+- Replaced `withRuntime` HOC by `useRuntime` hook in `Logo`.
 
 ## [3.21.8] - 2019-04-03
 

@@ -7,33 +7,37 @@ import { graphql } from 'react-apollo'
 
 import orderFormQuery from './queries/orderForm.gql'
 import Loader from './Loader'
-
 import styles from './styles.css'
 
-const Wrapper = ({ children }) => (
-  <div
-    className={`${
-      styles.greetingContainer
-    } mh4 pv4 t-heading-4 c-on-base nowrap`}
-  >
-    {children}
-  </div>
-)
+function Wrapper({ children }) {
+  return (
+    <div
+      className={`${styles.greetingContainer} mh4 pv4 t-heading-4 c-on-base nowrap`}
+    >
+      {children}
+    </div>
+  )
+}
 
+// eslint-disable-next-line react/display-name
 const withWrapper = Component => props => (
   <Wrapper>
     <Component {...props} />
   </Wrapper>
 )
 
-const Greeting = ({ orderForm }) => {
-  const firstName = path(['clientProfileData', 'firstName'], orderForm)
+/**
+ * @deprecated This component is deprecated.
+ */
+function Greeting({ orderForm }) {
+  const firstName = path(['clientProfileData', 'firstName'], orderForm) || null
+
   return (
     firstName && (
       <Wrapper>
         <Fragment>
           <span className={styles.message}>
-            <FormattedMessage id="greeting" />,
+            <FormattedMessage id="store/greeting" />,
           </span>
           <span className={`${styles.firstName} pl2 b`}>{firstName}</span>
         </Fragment>

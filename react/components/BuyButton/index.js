@@ -1,167 +1,318 @@
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react'
-import { graphql } from 'react-apollo'
-import gql from 'graphql-tag'
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+import React, { useContext, useCallback, useState, useEffect } from 'react'
+import { FormattedMessage } from 'react-intl'
+import { path } from 'ramda'
 import ContentLoader from 'react-content-loader'
-import { compose, pick } from 'ramda'
-import { orderFormConsumer } from 'vtex.store-resources/OrderFormContext'
+import { useRuntime } from 'vtex.render-runtime'
+import { usePWA } from 'vtex.store-resources/PWAContext'
+import { useCssHandles } from 'vtex.css-handles'
+import useProduct from 'vtex.product-context/useProduct'
+import { useProductDispatch } from 'vtex.product-context/ProductDispatchContext'
+import { Button, ToastContext, Tooltip } from 'vtex.styleguide'
 
-import { Button, withToast } from 'vtex.styleguide'
+import useMarketingSessionParams from './hooks/useMarketingSessionParams'
 
 const CONSTANTS = {
-  SUCCESS_MESSAGE_ID: 'buybutton.buy-success',
-  ERROR_MESSAGE_ID: 'buybutton.add-failure',
-  CHECKOUT_URL: '/checkout/#/cart',
+  SUCCESS_MESSAGE_ID: 'store/buybutton.buy-success',
+  SELECT_SKU_ERROR_ID: 'store/buybutton.select-sku-variations',
+  OFFLINE_BUY_MESSAGE_ID: 'store/buybutton.buy-offline-success',
+  DUPLICATE_CART_ITEM_ID: 'store/buybutton.buy-success-duplicate',
+  ERROR_MESSAGE_ID: 'store/buybutton.add-failure',
+  SEE_CART_ID: 'store/buybutton.see-cart',
   TOAST_TIMEOUT: 3000,
+}
+
+const CSS_HANDLES = ['buyButtonContainer', 'buyButtonText']
+
+const isTooltipNeeded = ({ showTooltipOnSkuNotSelected, skuSelector }) => {
+  if (showTooltipOnSkuNotSelected && !skuSelector.areAllVariationsSelected) {
+    return {
+      showTooltip: true,
+      labelId: CONSTANTS.SELECT_SKU_ERROR_ID,
+    }
+  }
+
+  return {
+    showTooltip: false,
+  }
+}
+
+const skuItemToMinicartItem = item => {
+  return {
+    // Important for the mutation
+    id: item.skuId,
+    seller: item.seller,
+    options: item.options,
+    quantity: item.quantity,
+
+    // Fields for optmistic cart
+    sellingPrice: item.price,
+    skuName: item.variant,
+    detailUrl: item.detailUrl,
+    imageUrl: item.imageUrl,
+    name: item.name,
+    listPrice: item.listPrice,
+    assemblyOptions: item.assemblyOptions,
+    sellingPriceWithAssemblies: item.sellingPriceWithAssemblies,
+
+    // Fields for Analytics
+    brand: item.brand,
+    category: item.category,
+    productRefId: item.productRefId,
+  }
+}
+
+const useCallCartFinishIfPending = (
+  orderFormContext,
+  isAddingToCart,
+  addToCartAndFinish
+) => {
+  const orderFormLoading = orderFormContext && orderFormContext.loading
+
+  useEffect(() => {
+    if (!orderFormLoading && isAddingToCart) {
+      addToCartAndFinish()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderFormLoading])
 }
 
 /**
  * BuyButton Component.
  * Adds a list of sku items to the cart.
+ * @deprecated This component is deprecated. Please use [vtex.add-to-cart-button](https://github.com/vtex-apps/add-to-cart-button) instead.
  */
-export class BuyButton extends Component {
-  static defaultProps = {
-    isOneClickBuy: false,
-    available: true,
+export const BuyButton = ({
+  intl,
+  large,
+  addToCart,
+  skuItems,
+  onAddStart,
+  onAddFinish,
+  setMinicartOpen,
+  available = true,
+  orderFormContext,
+  isOneClickBuy = false,
+  children,
+  disabled: disabledProp,
+  shouldAddToCart = true,
+  shouldOpenMinicart = false,
+  showTooltipOnSkuNotSelected = true,
+  checkoutUrl,
+  customToastURL = checkoutUrl,
+}) => {
+  const { handles } = useCssHandles(CSS_HANDLES)
+  const [isAddingToCart, setAddingToCart] = useState(false)
+  const { showToast } = useContext(ToastContext)
+  const {
+    skuSelector = {
+      areAllVariationsSelected: true,
+    },
+  } = useProduct()
+
+  const dispatch = useProductDispatch()
+  const { settings = {}, showInstallPrompt } = usePWA() || {}
+  const { rootPath = '' } = useRuntime()
+  const { promptOnCustomEvent } = settings
+  const translateMessage = useCallback(id => intl.formatMessage({ id }), [intl])
+  const orderFormItems = path(['orderForm', 'items'], orderFormContext)
+  const { utmParams, utmiParams } = useMarketingSessionParams()
+
+  const resolveToastMessage = (success, isNewItem) => {
+    if (!success) return translateMessage(CONSTANTS.ERROR_MESSAGE_ID)
+    if (!isNewItem) return translateMessage(CONSTANTS.DUPLICATE_CART_ITEM_ID)
+
+    const isOffline = window && window.navigator && !window.navigator.onLine
+    const checkForOffline = !isOffline
+      ? translateMessage(CONSTANTS.SUCCESS_MESSAGE_ID)
+      : translateMessage(CONSTANTS.OFFLINE_BUY_MESSAGE_ID)
+
+    return checkForOffline
   }
 
-  state = {
-    isLoading: false,
-    isAddingToCart: false,
-    timeOut: null,
+  const toastMessage = ({ success, isNewItem }) => {
+    const message = resolveToastMessage(success, isNewItem)
+
+    const action = success
+      ? {
+          label: translateMessage(CONSTANTS.SEE_CART_ID),
+          href: rootPath + customToastURL,
+        }
+      : undefined
+
+    showToast({ message, action })
   }
 
-  translateMessage = id => this.props.intl.formatMessage({ id: id })
+  const fullCheckoutUrl = rootPath + checkoutUrl
 
-  toastMessage = success => {
-    const message = success
-      ? this.translateMessage(CONSTANTS.SUCCESS_MESSAGE_ID)
-      : this.translateMessage(CONSTANTS.ERROR_MESSAGE_ID)
-    this.props.showToast({ message })
-  }
-
-  skuItemToMinicartItem = ({
-    skuId: id,
-    variant: skuName,
-    price: sellingPrice,
-    ...restSkuItem
-  }) => {
-    return {
-      id,
-      sellingPrice,
-      skuName,
-      ...pick(
-        [
-          'detailUrl',
-          'imageUrl',
-          'quantity',
-          'seller',
-          'name',
-          'options',
-          'listPrice',
-        ],
-        restSkuItem
-      ),
-      index: 1,
-    }
-  }
-
-  handleAddToCart = async event => {
+  const beforeAddToCart = event => {
     event.stopPropagation()
     event.preventDefault()
 
-    const {
-      addToCart,
-      skuItems,
-      isOneClickBuy,
-      onAddStart,
-      onAddFinish,
-      orderFormContext,
-    } = this.props
-    this.setState({ isAddingToCart: true })
+    setAddingToCart(true)
     onAddStart && onAddStart()
+  }
 
-    let showToastMessage = null
+  const addToCartAndFinish = async () => {
+    let showToastMessage
 
     try {
-      const minicartItems = skuItems.map(this.skuItemToMinicartItem)
-      const {
-        data: { addToCart: linkStateItems },
-      } = await addToCart(minicartItems)
+      const minicartItems = skuItems.map(skuItemToMinicartItem)
+      const localStateMutationResult = !isOneClickBuy
+        ? await addToCart(minicartItems)
+        : null
+
+      const linkStateItems =
+        localStateMutationResult && localStateMutationResult.data.addToCart
+
+      const callOrderFormDirectly = !linkStateItems
 
       let success = null
-      if (!linkStateItems) {
-        // minicart does not have link state implemented, calling graphql directly
+
+      if (callOrderFormDirectly) {
         const variables = {
           orderFormId: orderFormContext.orderForm.orderFormId,
-          items: skuItems.map(skuItem => {
-            const { skuId } = skuItem
-            return {
-              id: parseInt(skuId),
-              index: 1,
-              ...pick(['quantity', 'seller', 'options'], skuItem),
-            }
-          }),
+          items: skuItems.map(item => ({
+            id: item.skuId,
+            seller: item.seller,
+            options: item.options,
+            quantity: item.quantity,
+          })),
+          ...(utmParams ? { utmParams } : {}),
+          ...(utmiParams ? { utmiParams } : {}),
         }
+
         const mutationRes = await orderFormContext.addItem({ variables })
         const { items } = mutationRes.data.addItem
+
         success = skuItems.filter(
-          skuItem => !!items.find(({ id }) => id === skuItem.skuId)
+          skuItem =>
+            !!items.find(
+              ({ id, seller }) =>
+                id === skuItem.skuId && seller === skuItem.seller
+            )
         )
         await orderFormContext.refetch().catch(() => null)
       }
 
-      success =
-        success ||
+      const addedItem =
         (linkStateItems &&
           skuItems.filter(
-            skuItem => !!linkStateItems.find(({ id }) => id === skuItem.skuId)
-          ))
+            skuItem =>
+              !!linkStateItems.find(
+                ({ id, seller }) =>
+                  id === skuItem.skuId && seller === skuItem.seller
+              )
+          )) ||
+        success
 
-      if (isOneClickBuy) location.assign(CONSTANTS.CHECKOUT_URL)
-      showToastMessage = () => this.toastMessage(success && success.length >= 1)
+      const foundItem =
+        addedItem.length &&
+        orderFormItems &&
+        orderFormItems.filter(
+          item =>
+            item.id === addedItem[0].skuId &&
+            item.seller === addedItem[0].seller &&
+            !item.canHaveAttachment
+        ).length > 0
+
+      success = addedItem
+
+      showToastMessage = () =>
+        toastMessage({
+          success: success && success.length >= 1,
+          isNewItem: !foundItem,
+        })
+
+      /* PWA */
+      if (promptOnCustomEvent === 'addToCart' && showInstallPrompt) {
+        showInstallPrompt()
+      }
+
+      shouldOpenMinicart && !isOneClickBuy && setMinicartOpen(true)
     } catch (err) {
       console.error(err)
-      showToastMessage = () => this.toastMessage(false)
+      showToastMessage = () => toastMessage(false)
     }
 
-    setTimeout(
-      () =>
-        this.setState({ isAddingToCart: false }, () => {
-          showToastMessage()
-          onAddFinish && onAddFinish()
-        }),
-      500
-    )
+    setTimeout(() => {
+      setAddingToCart(false)
+      showToastMessage()
+      if (isOneClickBuy) {
+        // eslint-disable-next-line no-restricted-globals
+        location.assign(fullCheckoutUrl)
+      }
+
+      onAddFinish && onAddFinish()
+    }, 500)
   }
 
-  render() {
-    const { children, skuItems, available, large } = this.props
-    const loading = this.state.isLoading || !skuItems
-    const { isAddingToCart } = this.state
-
-    return (
-      <Fragment>
-        {loading ? (
-          <ContentLoader />
-        ) : (
-          <Button
-            block={large}
-            disabled={!available}
-            onClick={this.handleAddToCart}
-            isLoading={isAddingToCart}
-          >
-            {available ? (
-              children
-            ) : (
-              <FormattedMessage id="buyButton-label-unavailable" />
-            )}
-          </Button>
-        )}
-      </Fragment>
-    )
+  const handleAddToCart = async event => {
+    beforeAddToCart(event)
+    await addToCartAndFinish()
   }
+
+  useCallCartFinishIfPending(
+    orderFormContext,
+    isAddingToCart,
+    addToCartAndFinish
+  )
+
+  const handleClick = e => {
+    if (dispatch) {
+      dispatch({ type: 'SET_BUY_BUTTON_CLICKED', args: { clicked: true } })
+    }
+
+    if (skuSelector.areAllVariationsSelected && shouldAddToCart) {
+      if (orderFormContext && orderFormContext.loading) {
+        // Just call the before add to cart function and the useEffect hook will call the finish part when apropriate
+        beforeAddToCart(e)
+      } else {
+        handleAddToCart(e)
+      }
+    }
+  }
+
+  if (!skuItems) {
+    return <ContentLoader />
+  }
+
+  const disabled = disabledProp || !available
+  const unavailableLabel = (
+    <FormattedMessage id="store/buyButton-label-unavailable">
+      {message => <span className={handles.buyButtonText}>{message}</span>}
+    </FormattedMessage>
+  )
+
+  const ButtonWithLabel = (
+    <Button
+      block={large}
+      disabled={disabled}
+      onClick={handleClick}
+      isLoading={isAddingToCart}
+    >
+      {available ? children : unavailableLabel}
+    </Button>
+  )
+
+  const { showTooltip, labelId } = isTooltipNeeded({
+    showTooltipOnSkuNotSelected,
+    skuSelector,
+  })
+
+  const tooltipLabel = showTooltip && (
+    <span className={handles.errorMessage}>
+      <FormattedMessage id={labelId} />
+    </span>
+  )
+
+  return !showTooltip ? (
+    ButtonWithLabel
+  ) : (
+    <Tooltip trigger="click" label={tooltipLabel}>
+      {ButtonWithLabel}
+    </Tooltip>
+  )
 }
 
 BuyButton.propTypes = {
@@ -197,42 +348,40 @@ BuyButton.propTypes = {
       ),
     })
   ),
-  /** Component children that will be displayed inside of the button **/
+  /** Component children that will be displayed inside of the button */
   children: PropTypes.node.isRequired,
   /** Should redirect to checkout after adding to cart */
   isOneClickBuy: PropTypes.bool,
+  /** Should open the Minicart after click */
+  shouldOpenMinicart: PropTypes.bool,
+  /** If it should add to cart when clicked */
+  shouldAddToCart: PropTypes.bool,
   /** Set style to large */
   large: PropTypes.bool,
   /** Internationalization */
-  intl: intlShape.isRequired,
-  /** If the product is available or not*/
-  available: PropTypes.bool.isRequired,
+  intl: PropTypes.object.isRequired,
+  /** If the product is available or not */
+  available: PropTypes.bool,
+  /** If it should a tooltip when you click the button but there's no SKU selected */
+  showTooltipOnSkuNotSelected: PropTypes.bool,
   /** Function used to show toasts (messages) to user */
-  showToast: PropTypes.func.isRequired,
+  showToast: PropTypes.func,
   /** Function to be called on the start of add to cart click event */
   onAddStart: PropTypes.func,
   /** Function to be called on the end of add to cart event */
   onAddFinish: PropTypes.func,
   /** Add to cart mutation */
   addToCart: PropTypes.func.isRequired,
+  /** Open Minicart mutation */
+  setMinicartOpen: PropTypes.func.isRequired,
+  /** The orderFormContext object */
+  orderFormContext: PropTypes.object,
+  /** If the button is disabled or not */
+  disabled: PropTypes.bool,
+  /** A custom URL for the `VIEW CART` button inside the toast */
+  customToastURL: PropTypes.string,
+  /** The URL to the cart */
+  checkoutUrl: PropTypes.string,
 }
 
-const withMutation = graphql(
-  gql`
-    mutation addToCart($items: [MinicartItem]) {
-      addToCart(items: $items) @client
-    }
-  `,
-  {
-    props: ({ mutate }) => ({
-      addToCart: items => mutate({ variables: { items } }),
-    }),
-  }
-)
-
-export default compose(
-  withMutation,
-  withToast,
-  injectIntl,
-  orderFormConsumer
-)(BuyButton)
+export default BuyButton
